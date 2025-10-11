@@ -1,3 +1,4 @@
+// src/components/PowerCharts.tsx
 "use client";
 
 import {
@@ -11,19 +12,33 @@ import {
   ResponsiveContainer,
   AreaChart,
   Area,
+  TooltipProps,
 } from "recharts";
 import { ChartData, CurrentSensorData, Stats } from "@/types";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 
-// Custom tooltip component
-const CustomTooltip = ({ active, payload, label }: any) => {
+// Define proper types for tooltip
+interface CustomTooltipProps {
+  active?: boolean;
+  payload?: Array<{
+    dataKey: string;
+    value: number;
+    name: string;
+    color: string;
+    unit?: string;
+  }>;
+  label?: string;
+}
+
+// Fixed CustomTooltip with proper types
+const CustomTooltip = ({ active, payload, label }: CustomTooltipProps) => {
   if (active && payload && payload.length) {
     return (
       <div className="bg-white border border-gray-200 dark:bg-gray-900 dark:border-gray-700 rounded-lg p-3 shadow-lg z-50">
         <p className="font-medium text-gray-900 dark:text-white mb-2">
           {label}
         </p>
-        {payload.map((entry: any, index: number) => (
+        {payload.map((entry, index) => (
           <p key={index} style={{ color: entry.color }} className="text-sm">
             {entry.name}:{" "}
             <strong className="text-gray-900 dark:text-white">
@@ -38,7 +53,6 @@ const CustomTooltip = ({ active, payload, label }: any) => {
   return null;
 };
 
-// Add the props interface
 interface PowerChartsProps {
   data: ChartData[];
   currentData: CurrentSensorData;
@@ -57,7 +71,78 @@ export default function PowerCharts({ data, currentData }: PowerChartsProps) {
     }
   }, [data]);
 
-  // Debug effect to track chartData changes
+  // Move calculateStats inside useCallback to fix dependency issue
+  const calculateStats = useCallback(
+    (key: keyof ChartData): Stats => {
+      console.log(`🧮 Calculating stats for: ${key}`);
+
+      const values = chartData
+        .map((d) => {
+          const value = d[key] as number;
+          return typeof value === "number" && !isNaN(value) ? value : null;
+        })
+        .filter((v): v is number => v !== null);
+
+      console.log(`📊 Stats calculation for ${key}:`, {
+        valuesCount: values.length,
+        valuesSample: values.slice(0, 5),
+      });
+
+      if (values.length === 0) {
+        console.warn(`⚠️ No valid values found for ${key}, returning zeros`);
+        return { min: 0, max: 0, avg: 0, current: 0 };
+      }
+
+      const min = Math.min(...values);
+      const max = Math.max(...values);
+      const avg = values.reduce((a, b) => a + b, 0) / values.length;
+      const current = values[values.length - 1] || 0;
+
+      const stats = {
+        min: parseFloat(min.toFixed(1)),
+        max: parseFloat(max.toFixed(1)),
+        avg: parseFloat(avg.toFixed(1)),
+        current: parseFloat(current.toFixed(key === "current" ? 3 : 1)),
+      };
+
+      console.log(`✅ Final stats for ${key}:`, stats);
+      return stats;
+    },
+    [chartData]
+  );
+
+  const calculateDeltaDomain = useCallback(
+    (key: keyof ChartData, delta: number = 2) => {
+      const values = chartData
+        .map((d) => d[key] as number)
+        .filter((v) => !isNaN(v));
+
+      if (values.length === 0) {
+        console.log(`📏 Domain for ${key}: No data, using default [0, 10]`);
+        return [0, 10];
+      }
+
+      const min = Math.min(...values);
+      const max = Math.max(...values);
+      const range = max - min;
+
+      const effectiveDelta = Math.max(delta, range * 0.2);
+      const domainMin = Math.max(0, Math.floor(min - effectiveDelta));
+      const domainMax = Math.ceil(max + effectiveDelta);
+
+      console.log(`📏 Domain for ${key}:`, {
+        min,
+        max,
+        range,
+        effectiveDelta,
+        domain: [domainMin, domainMax],
+      });
+      return [domainMin, domainMax];
+    },
+    [chartData]
+  );
+
+  // Debug effect
   useEffect(() => {
     console.log("🔍 DEBUG - chartData updated:", {
       length: chartData.length,
@@ -73,18 +158,13 @@ export default function PowerCharts({ data, currentData }: PowerChartsProps) {
       })),
     });
 
-    // Debug statistics when chartData changes
     if (chartData.length > 0) {
       console.log("📈 DEBUG - Statistics calculation:", {
-        powerValues: chartData.map((d) => d.power),
-        tempValues: chartData.map((d) => d.temperature),
-        voltageValues: chartData.map((d) => d.voltage),
-        currentValues: chartData.map((d) => d.current),
         powerStats: calculateStats("power"),
         tempStats: calculateStats("temperature"),
       });
     }
-  }, [chartData]);
+  }, [chartData, calculateStats]);
 
   // Fetch historical data from PostgreSQL via Prisma
   const fetchChartData = async () => {
@@ -137,14 +217,6 @@ export default function PowerCharts({ data, currentData }: PowerChartsProps) {
             timestamp: reading.timestamp,
           };
 
-          // Log first transformation for debugging
-          if (index === 0) {
-            console.log("🔄 First data transformation:", {
-              original: reading,
-              transformed,
-            });
-          }
-
           return transformed;
         }
       );
@@ -152,20 +224,6 @@ export default function PowerCharts({ data, currentData }: PowerChartsProps) {
       console.log("✅ Historical data transformed:", {
         totalRecords: transformedData.length,
         hasData: transformedData.length > 0,
-        powerRange:
-          transformedData.length > 0
-            ? [
-                Math.min(...transformedData.map((d) => d.power)),
-                Math.max(...transformedData.map((d) => d.power)),
-              ]
-            : [0, 0],
-        tempRange:
-          transformedData.length > 0
-            ? [
-                Math.min(...transformedData.map((d) => d.temperature)),
-                Math.max(...transformedData.map((d) => d.temperature)),
-              ]
-            : [0, 0],
       });
 
       setChartData(transformedData);
@@ -193,73 +251,7 @@ export default function PowerCharts({ data, currentData }: PowerChartsProps) {
     };
   }, []);
 
-  const calculateStats = (key: keyof ChartData): Stats => {
-    console.log(`🧮 Calculating stats for: ${key}`);
-
-    const values = chartData
-      .map((d) => {
-        const value = d[key] as number;
-        // Ensure we have valid numbers
-        return typeof value === "number" && !isNaN(value) ? value : null;
-      })
-      .filter((v): v is number => v !== null);
-
-    console.log(`📊 Stats calculation for ${key}:`, {
-      valuesCount: values.length,
-      valuesSample: values.slice(0, 5),
-      allValues: values,
-    });
-
-    if (values.length === 0) {
-      console.warn(`⚠️ No valid values found for ${key}, returning zeros`);
-      return { min: 0, max: 0, avg: 0, current: 0 };
-    }
-
-    const min = Math.min(...values);
-    const max = Math.max(...values);
-    const avg = values.reduce((a, b) => a + b, 0) / values.length;
-    const current = values[values.length - 1] || 0;
-
-    const stats = {
-      min: parseFloat(min.toFixed(1)),
-      max: parseFloat(max.toFixed(1)),
-      avg: parseFloat(avg.toFixed(1)),
-      current: parseFloat(current.toFixed(key === "current" ? 3 : 1)),
-    };
-
-    console.log(`✅ Final stats for ${key}:`, stats);
-    return stats;
-  };
-
-  const calculateDeltaDomain = (key: keyof ChartData, delta: number = 2) => {
-    const values = chartData
-      .map((d) => d[key] as number)
-      .filter((v) => !isNaN(v));
-
-    if (values.length === 0) {
-      console.log(`📏 Domain for ${key}: No data, using default [0, 10]`);
-      return [0, 10];
-    }
-
-    const min = Math.min(...values);
-    const max = Math.max(...values);
-    const range = max - min;
-
-    const effectiveDelta = Math.max(delta, range * 0.2);
-    const domainMin = Math.max(0, Math.floor(min - effectiveDelta));
-    const domainMax = Math.ceil(max + effectiveDelta);
-
-    console.log(`📏 Domain for ${key}:`, {
-      min,
-      max,
-      range,
-      effectiveDelta,
-      domain: [domainMin, domainMax],
-    });
-    return [domainMin, domainMax];
-  };
-
-  // Calculate stats with debugging
+  // Calculate stats
   const tempStats = calculateStats("temperature");
   const powerStats = calculateStats("power");
   const voltageStats = calculateStats("voltage");

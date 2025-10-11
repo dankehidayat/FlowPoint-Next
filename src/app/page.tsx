@@ -1,3 +1,4 @@
+// src/app/page.tsx
 "use client";
 
 import { useState, useEffect } from "react";
@@ -5,31 +6,33 @@ import SummaryDashboard from "@/components/SummaryDashboard";
 import EnvironmentPanel from "@/components/EnvironmentPanel";
 import PowerCharts from "@/components/PowerCharts";
 import { SensorData, ChartData } from "@/types";
+import { api } from "@/lib/api";
 
 // Function to fetch ALREADY CALIBRATED data from our API route
 const fetchBlynkData = async (): Promise<SensorData> => {
   const baseTime = new Date();
 
   try {
-    const response = await fetch("/api/blynk", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      cache: "no-store",
-    });
+    console.log("🔄 Fetching data from /api/blynk...");
 
-    if (!response.ok) {
-      throw new Error(`API responded with status: ${response.status}`);
-    }
+    const data = await api.getBlynkData();
+    console.log("✅ Raw Blynk data received:", data);
 
-    const data = await response.json();
-    console.log("Raw Blynk data received:", data);
-
+    // If there's an error in the response, throw it
     if (data.error) {
       throw new Error(data.error);
     }
 
+    // Check if we have valid data (not all zeros)
+    const hasValidData = Object.values(data).some(
+      (val) => val !== 0 && val !== null && val !== undefined
+    );
+
+    if (!hasValidData) {
+      console.warn("⚠️ All data values are zero - Blynk server might be down");
+    }
+
+    // DIRECTLY USE THE CALIBRATED VALUES FROM ARDUINO - NO CALIBRATION NEEDED
     const sensorData: SensorData = {
       voltage: parseFloat((data.voltage || 0).toFixed(1)),
       current: parseFloat((data.current || 0).toFixed(3)),
@@ -44,11 +47,27 @@ const fetchBlynkData = async (): Promise<SensorData> => {
       timestamp: baseTime,
     };
 
-    console.log("Processed sensor data:", sensorData);
+    console.log("📊 Processed sensor data:", sensorData);
     return sensorData;
   } catch (error) {
-    console.error("Error in fetchBlynkData:", error);
-    throw new Error("Failed to connect to Blynk server");
+    console.error("❌ Error in fetchBlynkData:", error);
+
+    // Return fallback data instead of throwing
+    const fallbackData: SensorData = {
+      voltage: 0,
+      current: 0,
+      power: 0,
+      energy: 0,
+      frequency: 0,
+      powerFactor: 0,
+      apparentPower: 0,
+      reactivePower: 0,
+      temperature: 0,
+      humidity: 0,
+      timestamp: baseTime,
+    };
+
+    return fallbackData;
   }
 };
 
@@ -76,7 +95,7 @@ export default function Dashboard() {
         setSensorData(initialData);
         setLastUpdate(new Date().toLocaleTimeString());
 
-        // Initialize chart with current calibrated data - FIXED: timestamp as string
+        // Initialize chart with current calibrated data
         const initialChartData: ChartData[] = Array.from(
           { length: 20 },
           (_, i) => {
@@ -97,17 +116,17 @@ export default function Dashboard() {
               energy: initialData.energy,
               frequency: initialData.frequency,
               powerFactor: initialData.powerFactor,
-              timestamp: time.toISOString(), // Convert Date to string
+              timestamp: time.toISOString(),
             };
           }
         );
         setChartData(initialChartData);
 
         console.log("Dashboard initialized successfully");
-      } catch (err) {
+      } catch (error) {
         const errorMsg = "Failed to fetch data from Blynk server";
         setError(errorMsg);
-        console.error(errorMsg, err);
+        console.error(errorMsg, error);
       } finally {
         setIsLoading(false);
       }
@@ -124,7 +143,7 @@ export default function Dashboard() {
         setLastUpdate(new Date().toLocaleTimeString());
         setError(null);
 
-        // Update chart data with calibrated values - FIXED: timestamp as string
+        // Update chart data with calibrated values
         setChartData((prev) => {
           const newChartData: ChartData[] = [
             ...prev.slice(1),
@@ -143,17 +162,17 @@ export default function Dashboard() {
               energy: newData.energy,
               frequency: newData.frequency,
               powerFactor: newData.powerFactor,
-              timestamp: newData.timestamp.toISOString(), // Convert Date to string
+              timestamp: newData.timestamp.toISOString(),
             },
           ];
           return newChartData;
         });
 
         console.log("Data updated successfully");
-      } catch (err) {
+      } catch (error) {
         const errorMsg = "Failed to update data from Blynk server";
         setError(errorMsg);
-        console.error(errorMsg, err);
+        console.error(errorMsg, error);
       }
     }, 5000);
 
@@ -172,7 +191,7 @@ export default function Dashboard() {
       const newData = await fetchBlynkData();
       setSensorData(newData);
       setLastUpdate(new Date().toLocaleTimeString());
-    } catch (err) {
+    } catch (error) {
       setError("Failed to fetch data after retry");
     } finally {
       setIsLoading(false);
