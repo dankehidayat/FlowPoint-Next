@@ -1,0 +1,26 @@
+// prisma/schema.prisma
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model SensorData {
+  id            Int      @id @default(autoincrement())
+  voltage       Float
+  current       Float
+  power         Float
+  energy        Float
+  frequency     Float
+  powerFactor   Float    @map("power_factor")
+  apparentPower Float    @map("apparent_power")
+  reactivePower Float    @map("reactive_power")
+  temperature   Float
+  humidity      Float
+  timestamp     DateTime @default(now())
+
+  @@map("sensor_data")
+}
