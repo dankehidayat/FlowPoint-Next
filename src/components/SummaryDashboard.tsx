@@ -61,7 +61,7 @@ export default function SummaryDashboard({ data }: SummaryDashboardProps) {
           <h2 className="text-2xl font-semibold text-foreground mb-2">
             {getGreeting()}!
             <span className={`ml-2 ${tempStatus.color}`}>
-              It's {tempStatus.text.toLowerCase()} in the room right now{" "}
+              It&apos;s {tempStatus.text.toLowerCase()} in the room right now{" "}
               {tempStatus.emoji}
             </span>
           </h2>

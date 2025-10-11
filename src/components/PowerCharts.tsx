@@ -12,7 +12,6 @@ import {
   ResponsiveContainer,
   AreaChart,
   Area,
-  TooltipProps,
 } from "recharts";
 import { ChartData, CurrentSensorData, Stats } from "@/types";
 import { useEffect, useState, useCallback } from "react";
@@ -28,6 +27,22 @@ interface CustomTooltipProps {
     unit?: string;
   }>;
   label?: string;
+}
+
+// Define API response type
+interface ApiSensorReading {
+  id: number;
+  voltage: number | string;
+  current: number | string;
+  power: number | string;
+  energy: number | string;
+  frequency: number | string;
+  powerFactor: number | string;
+  apparentPower: number | string;
+  reactivePower: number | string;
+  temperature: number | string;
+  humidity: number | string;
+  timestamp: string;
 }
 
 // Fixed CustomTooltip with proper types
@@ -188,7 +203,7 @@ export default function PowerCharts({ data, currentData }: PowerChartsProps) {
         );
       }
 
-      const data = await response.json();
+      const data: ApiSensorReading[] = await response.json();
       console.log("📥 Historical data received from API:", {
         dataLength: data.length,
         dataTypes: data.length > 0 ? Object.keys(data[0]) : "no data",
@@ -198,7 +213,7 @@ export default function PowerCharts({ data, currentData }: PowerChartsProps) {
 
       // Transform data with proper number conversion
       const transformedData: ChartData[] = data.map(
-        (reading: any, index: number) => {
+        (reading: ApiSensorReading, index: number) => {
           const transformed = {
             time: new Date(reading.timestamp).toLocaleTimeString([], {
               hour: "2-digit",
@@ -660,7 +675,7 @@ export default function PowerCharts({ data, currentData }: PowerChartsProps) {
 
       {/* Data Source Info */}
       <div className="mt-4 text-center text-sm text-muted-foreground">
-        📊 Charts & Statistics: {chartData.length} historical readings from
+        📊 Charts &amp; Statistics: {chartData.length} historical readings from
         PostgreSQL via Prisma • 🔴 Live values: Real-time from Blynk IoT
       </div>
     </div>
