@@ -77,3 +77,93 @@ export async function saveSensorData(
     throw new Error(`Failed to save sensor data: ${(error as Error).message}`);
   }
 }
+
+// ADD THIS FUNCTION - Get recent sensor data
+export async function getRecentSensorData(
+  hours: number = 24,
+  limit: number = 100
+): Promise<SensorReading[]> {
+  try {
+    console.log(
+      `🔧 Fetching sensor data for last ${hours} hours, limit ${limit}`
+    );
+
+    const startTime = new Date(Date.now() - hours * 60 * 60 * 1000);
+
+    const sensorData = await prisma.sensorData.findMany({
+      where: {
+        timestamp: {
+          gte: startTime,
+        },
+      },
+      orderBy: {
+        timestamp: "desc",
+      },
+      take: limit,
+    });
+
+    console.log(`✅ Found ${sensorData.length} sensor readings from database`);
+    return sensorData;
+  } catch (error) {
+    console.error("❌ Error in getRecentSensorData:", error);
+    throw new Error(
+      `Failed to fetch sensor data: ${
+        error instanceof Error ? error.message : "Unknown error"
+      }`
+    );
+  }
+}
+
+// Optional: Additional utility functions you might find useful
+export async function getSensorDataById(
+  id: number
+): Promise<SensorReading | null> {
+  try {
+    return await prisma.sensorData.findUnique({
+      where: { id },
+    });
+  } catch (error) {
+    console.error("Error fetching sensor data by ID:", error);
+    throw error;
+  }
+}
+
+export async function getSensorDataByDateRange(
+  startDate: Date,
+  endDate: Date,
+  limit: number = 1000
+): Promise<SensorReading[]> {
+  try {
+    return await prisma.sensorData.findMany({
+      where: {
+        timestamp: {
+          gte: startDate,
+          lte: endDate,
+        },
+      },
+      orderBy: {
+        timestamp: "desc",
+      },
+      take: limit,
+    });
+  } catch (error) {
+    console.error("Error fetching sensor data by date range:", error);
+    throw error;
+  }
+}
+
+export async function getLatestSensorReading(): Promise<SensorReading | null> {
+  try {
+    const readings = await prisma.sensorData.findMany({
+      orderBy: {
+        timestamp: "desc",
+      },
+      take: 1,
+    });
+
+    return readings[0] || null;
+  } catch (error) {
+    console.error("Error fetching latest sensor reading:", error);
+    throw error;
+  }
+}
