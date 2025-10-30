@@ -1,3 +1,4 @@
+// src/components/SummaryDashboard.tsx
 import { SensorData } from "@/types";
 
 interface SummaryDashboardProps {
@@ -19,6 +20,7 @@ export default function SummaryDashboard({ data }: SummaryDashboardProps) {
         emoji: "❄️",
         color: "text-blue-500",
         bgColor: "bg-blue-500",
+        lightBgColor: "bg-blue-400",
       };
     if (temp < 26)
       return {
@@ -26,12 +28,14 @@ export default function SummaryDashboard({ data }: SummaryDashboardProps) {
         emoji: "😊",
         color: "text-green-500",
         bgColor: "bg-green-500",
+        lightBgColor: "bg-green-400",
       };
     return {
       text: "Hot",
       emoji: "🔥",
       color: "text-red-500",
       bgColor: "bg-red-500",
+      lightBgColor: "bg-red-400",
     };
   };
 
@@ -41,14 +45,21 @@ export default function SummaryDashboard({ data }: SummaryDashboardProps) {
         text: "Dry",
         color: "text-orange-500",
         bgColor: "bg-orange-500",
+        lightBgColor: "bg-orange-400",
       };
     if (humidity < 70)
       return {
         text: "Normal",
         color: "text-green-500",
         bgColor: "bg-green-500",
+        lightBgColor: "bg-green-400",
       };
-    return { text: "Humid", color: "text-blue-500", bgColor: "bg-blue-500" };
+    return {
+      text: "Humid",
+      color: "text-blue-500",
+      bgColor: "bg-blue-500",
+      lightBgColor: "bg-blue-400",
+    };
   };
 
   const tempStatus = getTemperatureStatus(data.temperature);
@@ -75,7 +86,6 @@ export default function SummaryDashboard({ data }: SummaryDashboardProps) {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        {/* Total Energy */}
         <div className="bg-blue-500 text-white rounded-lg p-6">
           <div className="flex items-center justify-between mb-2">
             <div className="text-blue-100 text-sm">Energy Consumed</div>
@@ -103,7 +113,6 @@ export default function SummaryDashboard({ data }: SummaryDashboardProps) {
           </div>
         </div>
 
-        {/* Temperature - Dynamic background color */}
         <div className={`${tempStatus.bgColor} text-white rounded-lg p-6`}>
           <div className="flex items-center justify-between mb-2">
             <div
@@ -115,10 +124,7 @@ export default function SummaryDashboard({ data }: SummaryDashboardProps) {
               Temperature
             </div>
             <div
-              className={`w-8 h-8 ${tempStatus.bgColor.replace(
-                "500",
-                "400"
-              )} rounded-lg flex items-center justify-center`}
+              className={`w-8 h-8 ${tempStatus.lightBgColor} rounded-lg flex items-center justify-center`}
             >
               <svg
                 className="w-4 h-4"
@@ -148,7 +154,6 @@ export default function SummaryDashboard({ data }: SummaryDashboardProps) {
           </div>
         </div>
 
-        {/* Humidity - Dynamic background color */}
         <div className={`${humidityStatus.bgColor} text-white rounded-lg p-6`}>
           <div className="flex items-center justify-between mb-2">
             <div
@@ -160,10 +165,7 @@ export default function SummaryDashboard({ data }: SummaryDashboardProps) {
               Humidity
             </div>
             <div
-              className={`w-8 h-8 ${humidityStatus.bgColor.replace(
-                "500",
-                "400"
-              )} rounded-lg flex items-center justify-center`}
+              className={`w-8 h-8 ${humidityStatus.lightBgColor} rounded-lg flex items-center justify-center`}
             >
               <svg
                 className="w-4 h-4"

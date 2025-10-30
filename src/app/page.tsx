@@ -4,7 +4,7 @@
 import { useState, useEffect } from "react";
 import SummaryDashboard from "@/components/SummaryDashboard";
 import EnvironmentPanel from "@/components/EnvironmentPanel";
-import PowerCharts from "@/components/PowerCharts";
+import EnergyCharts from "@/components/EnergyCharts";
 import { SensorData, ChartData } from "@/types";
 import { api } from "@/lib/api";
 
@@ -247,11 +247,6 @@ export default function Dashboard() {
             <p className="text-muted-foreground">
               Real-time Energy & Environment Monitoring
             </p>
-            {lastUpdate && (
-              <p className="text-xs text-muted-foreground mt-1">
-                Last update: {lastUpdate}
-              </p>
-            )}
           </div>
           <div className="flex items-center gap-4">
             {error && (
@@ -295,12 +290,12 @@ export default function Dashboard() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
           {/* Environment Panel */}
           <div className="lg:col-span-1">
-            <EnvironmentPanel data={sensorData} />
+            <EnvironmentPanel data={sensorData} chartData={chartData} />
           </div>
 
-          {/* Power Charts */}
+          {/* Energy Charts */}
           <div className="lg:col-span-2">
-            <PowerCharts data={chartData} currentData={sensorData} />
+            <EnergyCharts data={chartData} currentData={sensorData} />
           </div>
         </div>
       </div>
