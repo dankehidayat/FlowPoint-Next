@@ -177,12 +177,12 @@ export default function EnergyCharts({ data, currentData }: EnergyChartsProps) {
       {/* Statistics Panel - All energy metrics */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
         {/* Active Power Pill */}
-        <div className="bg-card border-2 border-green-500 rounded-2xl p-4">
+        <div className="bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-950/20 dark:to-emerald-950/10 border border-green-200 dark:border-green-800 rounded-2xl p-4">
           <div className="flex items-center justify-between mb-3">
-            <div className="p-2 rounded-lg bg-green-50 dark:bg-green-950">
-              <Plug className="w-4 h-4 text-green-600" />
+            <div className="p-2 rounded-xl bg-green-100/80 dark:bg-green-900/50 border border-green-200/50 dark:border-green-700/30">
+              <Plug className="w-4 h-4 text-green-600 dark:text-green-400" />
             </div>
-            <span className="text-lg font-bold text-green-600">
+            <span className="text-lg font-bold text-green-600 dark:text-green-400">
               {powerStats.current.toFixed(1)}
               <span className="text-sm font-normal ml-0.5">W</span>
             </span>
@@ -204,12 +204,12 @@ export default function EnergyCharts({ data, currentData }: EnergyChartsProps) {
         </div>
 
         {/* Apparent Power Pill */}
-        <div className="bg-card border-2 border-yellow-500 rounded-2xl p-4">
+        <div className="bg-gradient-to-br from-yellow-50 to-amber-50 dark:from-yellow-950/20 dark:to-amber-950/10 border border-yellow-200 dark:border-yellow-800 rounded-2xl p-4">
           <div className="flex items-center justify-between mb-3">
-            <div className="p-2 rounded-lg bg-yellow-50 dark:bg-yellow-950">
-              <Zap className="w-4 h-4 text-yellow-600" />
+            <div className="p-2 rounded-xl bg-yellow-100/80 dark:bg-yellow-900/50 border border-yellow-200/50 dark:border-yellow-700/30">
+              <Zap className="w-4 h-4 text-yellow-600 dark:text-yellow-400" />
             </div>
-            <span className="text-lg font-bold text-yellow-600">
+            <span className="text-lg font-bold text-yellow-600 dark:text-yellow-400">
               {apparentPowerStats.current.toFixed(1)}
               <span className="text-sm font-normal ml-0.5">VA</span>
             </span>
@@ -237,12 +237,12 @@ export default function EnergyCharts({ data, currentData }: EnergyChartsProps) {
         </div>
 
         {/* Reactive Power Pill */}
-        <div className="bg-card border-2 border-indigo-500 rounded-2xl p-4">
+        <div className="bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-950/20 dark:to-purple-950/10 border border-indigo-200 dark:border-indigo-800 rounded-2xl p-4">
           <div className="flex items-center justify-between mb-3">
-            <div className="p-2 rounded-lg bg-indigo-50 dark:bg-indigo-950">
-              <CircleDashed className="w-4 h-4 text-indigo-600" />
+            <div className="p-2 rounded-xl bg-indigo-100/80 dark:bg-indigo-900/50 border border-indigo-200/50 dark:border-indigo-700/30">
+              <CircleDashed className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
             </div>
-            <span className="text-lg font-bold text-indigo-600">
+            <span className="text-lg font-bold text-indigo-600 dark:text-indigo-400">
               {reactivePowerStats.current.toFixed(1)}
               <span className="text-sm font-normal ml-0.5">VAR</span>
             </span>
@@ -270,44 +270,45 @@ export default function EnergyCharts({ data, currentData }: EnergyChartsProps) {
         </div>
 
         {/* Power Factor Pill */}
-        <div className="bg-card border-2 border-cyan-500 rounded-2xl p-4">
+        <div className="bg-gradient-to-br from-cyan-50 to-blue-50 dark:from-cyan-950/20 dark:to-blue-950/10 border border-cyan-200 dark:border-cyan-800 rounded-2xl p-4">
           <div className="flex items-center justify-between mb-3">
-            <div className="p-2 rounded-lg bg-cyan-50 dark:bg-cyan-950">
-              <Gauge className="w-4 h-4 text-cyan-600" />
+            <div className="p-2 rounded-xl bg-cyan-100/80 dark:bg-cyan-900/50 border border-cyan-200/50 dark:border-cyan-700/30">
+              <Gauge className="w-4 h-4 text-cyan-600 dark:text-cyan-400" />
             </div>
-            <span className="text-lg font-bold text-cyan-600">
+            <span className="text-lg font-bold text-cyan-600 dark:text-cyan-400">
               {powerFactorStats.current.toFixed(2)}
+              <span className="text-sm font-normal ml-0.5">%</span>
             </span>
           </div>
           <div className="flex justify-between text-xs">
             <div className="text-center">
               <div className="text-muted-foreground text-[10px]">Avg</div>
               <div className="font-semibold">
-                {powerFactorStats.avg.toFixed(2)}
+                {powerFactorStats.avg.toFixed(2)}%
               </div>
             </div>
             <div className="text-center">
               <div className="text-muted-foreground text-[10px]">Min</div>
               <div className="font-semibold">
-                {powerFactorStats.min.toFixed(2)}
+                {powerFactorStats.min.toFixed(2)}%
               </div>
             </div>
             <div className="text-center">
               <div className="text-muted-foreground text-[10px]">Max</div>
               <div className="font-semibold">
-                {powerFactorStats.max.toFixed(2)}
+                {powerFactorStats.max.toFixed(2)}%
               </div>
             </div>
           </div>
         </div>
 
         {/* Voltage Pill */}
-        <div className="bg-card border-2 border-blue-500 rounded-2xl p-4">
+        <div className="bg-gradient-to-br from-blue-50 to-sky-50 dark:from-blue-950/20 dark:to-sky-950/10 border border-blue-200 dark:border-blue-800 rounded-2xl p-4">
           <div className="flex items-center justify-between mb-3">
-            <div className="p-2 rounded-lg bg-blue-50 dark:bg-blue-950">
-              <Sigma className="w-4 h-4 text-blue-600" />
+            <div className="p-2 rounded-xl bg-blue-100/80 dark:bg-blue-900/50 border border-blue-200/50 dark:border-blue-700/30">
+              <Sigma className="w-4 h-4 text-blue-600 dark:text-blue-400" />
             </div>
-            <span className="text-lg font-bold text-blue-600">
+            <span className="text-lg font-bold text-blue-600 dark:text-blue-400">
               {voltageStats.current.toFixed(1)}
               <span className="text-sm font-normal ml-0.5">V</span>
             </span>
@@ -329,12 +330,12 @@ export default function EnergyCharts({ data, currentData }: EnergyChartsProps) {
         </div>
 
         {/* Current Pill */}
-        <div className="bg-card border-2 border-purple-500 rounded-2xl p-4">
+        <div className="bg-gradient-to-br from-purple-50 to-violet-50 dark:from-purple-950/20 dark:to-violet-950/10 border border-purple-200 dark:border-purple-800 rounded-2xl p-4">
           <div className="flex items-center justify-between mb-3">
-            <div className="p-2 rounded-lg bg-purple-50 dark:bg-purple-950">
-              <Activity className="w-4 h-4 text-purple-600" />
+            <div className="p-2 rounded-xl bg-purple-100/80 dark:bg-purple-900/50 border border-purple-200/50 dark:border-purple-700/30">
+              <Activity className="w-4 h-4 text-purple-600 dark:text-purple-400" />
             </div>
-            <span className="text-lg font-bold text-purple-600">
+            <span className="text-lg font-bold text-purple-600 dark:text-purple-400">
               {currentStats.current.toFixed(3)}
               <span className="text-sm font-normal ml-0.5">A</span>
             </span>
@@ -356,12 +357,12 @@ export default function EnergyCharts({ data, currentData }: EnergyChartsProps) {
         </div>
 
         {/* Frequency Pill */}
-        <div className="bg-card border-2 border-orange-500 rounded-2xl p-4">
+        <div className="bg-gradient-to-br from-orange-50 to-red-50 dark:from-orange-950/20 dark:to-red-950/10 border border-orange-200 dark:border-orange-800 rounded-2xl p-4">
           <div className="flex items-center justify-between mb-3">
-            <div className="p-2 rounded-lg bg-orange-50 dark:bg-orange-950">
-              <Waves className="w-4 h-4 text-orange-600" />
+            <div className="p-2 rounded-xl bg-orange-100/80 dark:bg-orange-900/50 border border-orange-200/50 dark:border-orange-700/30">
+              <Waves className="w-4 h-4 text-orange-600 dark:text-orange-400" />
             </div>
-            <span className="text-lg font-bold text-orange-600">
+            <span className="text-lg font-bold text-orange-600 dark:text-orange-400">
               {frequencyStats.current.toFixed(1)}
               <span className="text-sm font-normal ml-0.5">Hz</span>
             </span>
@@ -389,12 +390,12 @@ export default function EnergyCharts({ data, currentData }: EnergyChartsProps) {
         </div>
 
         {/* Energy Pill */}
-        <div className="bg-card border-2 border-teal-500 rounded-2xl p-4">
+        <div className="bg-gradient-to-br from-teal-50 to-emerald-50 dark:from-teal-950/20 dark:to-emerald-950/10 border border-teal-200 dark:border-teal-800 rounded-2xl p-4">
           <div className="flex items-center justify-between mb-3">
-            <div className="p-2 rounded-lg bg-teal-50 dark:bg-teal-950">
-              <Battery className="w-4 h-4 text-teal-600" />
+            <div className="p-2 rounded-xl bg-teal-100/80 dark:bg-teal-900/50 border border-teal-200/50 dark:border-teal-700/30">
+              <Battery className="w-4 h-4 text-teal-600 dark:text-teal-400" />
             </div>
-            <span className="text-lg font-bold text-teal-600">
+            <span className="text-lg font-bold text-teal-600 dark:text-teal-400">
               {energyStats.current.toFixed(2)}
               <span className="text-sm font-normal ml-0.5">Wh</span>
             </span>
@@ -456,8 +457,8 @@ export default function EnergyCharts({ data, currentData }: EnergyChartsProps) {
 
       {/* Simplified Data Source Info */}
       <div className="mt-4 text-center text-sm text-muted-foreground">
-        Charts & Statistics: {chartData.length} historical readings from
-        PostgreSQL
+        Charts & Statistics: {chartData.length} historical readings from Prisma
+        + PostgreSQL
       </div>
     </div>
   );
