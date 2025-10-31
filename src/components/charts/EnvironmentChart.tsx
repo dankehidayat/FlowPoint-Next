@@ -19,6 +19,42 @@ interface EnvironmentChartProps {
   initialData: ChartData[];
 }
 
+// Custom tooltip that matches the power charts style
+const CustomTooltip = ({ active, payload, label }: any) => {
+  if (active && payload && payload.length) {
+    return (
+      <div className="bg-popover border border-border rounded-lg shadow-lg backdrop-blur-sm overflow-hidden">
+        <div className="bg-muted/50 px-3 py-2 border-b border-border">
+          <p className="text-sm text-foreground font-medium">{label}</p>
+        </div>
+        <div className="px-3 py-2 space-y-1">
+          {payload.map((entry: any, index: number) => (
+            <div
+              key={index}
+              className="flex items-center justify-between text-sm"
+            >
+              <div className="flex items-center gap-2">
+                <div
+                  className="w-2 h-2 rounded-full flex-shrink-0"
+                  style={{ backgroundColor: entry.color }}
+                />
+                <span className="text-foreground">
+                  {entry.name} {/* Removed the colon */}
+                </span>
+              </div>
+              <span className="font-semibold text-foreground ml-4">
+                {entry.value?.toFixed(1)}
+                {entry.unit || ""}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+  return null;
+};
+
 export default function EnvironmentChart({
   initialData,
 }: EnvironmentChartProps) {
@@ -29,14 +65,12 @@ export default function EnvironmentChart({
   useEffect(() => {
     const fetchDataForTimeRange = async () => {
       if (timeRange <= 24) {
-        // For 24 hours or less, use client-side filtering from initial data
         const cutoffTime = new Date(Date.now() - timeRange * 60 * 60 * 1000);
         const filteredData = (initialData || []).filter(
           (item) => new Date(item.timestamp) >= cutoffTime
         );
         setChartData(filteredData);
       } else {
-        // For longer ranges, fetch aggregated data from API
         setIsLoading(true);
         try {
           const response = await fetch(
@@ -45,7 +79,6 @@ export default function EnvironmentChart({
           const result = await response.json();
 
           if (result.historical) {
-            // Transform aggregated data to ChartData format
             const transformedData = result.historical.map((item: any) => ({
               time: new Date(item.timestamp).toLocaleTimeString([], {
                 hour: "2-digit",
@@ -156,7 +189,7 @@ export default function EnvironmentChart({
               domain={humidityDomain}
               tickFormatter={(value) => `${value}%`}
             />
-            <Tooltip />
+            <Tooltip content={<CustomTooltip />} />
             <Legend />
             <Line
               yAxisId="left"

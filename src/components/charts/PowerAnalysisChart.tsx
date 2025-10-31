@@ -19,6 +19,40 @@ interface PowerAnalysisChartProps {
   initialData: ChartData[];
 }
 
+// Custom tooltip for power analysis chart
+const CustomTooltip = ({ active, payload, label }: any) => {
+  if (active && payload && payload.length) {
+    return (
+      <div className="bg-popover border border-border rounded-lg shadow-lg backdrop-blur-sm overflow-hidden">
+        <div className="bg-muted/50 px-3 py-2 border-b border-border">
+          <p className="text-sm text-foreground font-medium">{label}</p>
+        </div>
+        <div className="px-3 py-2 space-y-1">
+          {payload.map((entry: any, index: number) => (
+            <div
+              key={index}
+              className="flex items-center justify-between text-sm"
+            >
+              <div className="flex items-center gap-2">
+                <div
+                  className="w-2 h-2 rounded-full flex-shrink-0"
+                  style={{ backgroundColor: entry.color }}
+                />
+                <span className="text-foreground">{entry.name}</span>
+              </div>
+              <span className="font-semibold text-foreground ml-4">
+                {entry.value?.toFixed(entry.name === "Current" ? 3 : 1)}
+                {entry.unit ? ` ${entry.unit}` : ""}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+  return null;
+};
+
 export default function PowerAnalysisChart({
   initialData,
 }: PowerAnalysisChartProps) {
@@ -110,7 +144,7 @@ export default function PowerAnalysisChart({
               className="fill-muted-foreground"
               domain={[0, "dataMax + 5"]}
             />
-            <Tooltip />
+            <Tooltip content={<CustomTooltip />} />
             <Legend />
             <Line
               type="monotone"

@@ -115,7 +115,7 @@ body {
   }
 }
 
-/* Enhanced Recharts Tooltip Styling with Color Indicators - FIXED */
+/* Enhanced Recharts Tooltip Styling - Consistent across all charts */
 .recharts-default-tooltip {
   background-color: hsl(var(--popover)) !important;
   border: 1px solid hsl(var(--border)) !important;
@@ -126,161 +126,99 @@ body {
   padding: 0 !important;
   overflow: hidden;
   max-width: 280px;
-  margin: 8px !important; /* Reduced margin */
+  margin: 8px !important;
 }
 
 .recharts-tooltip-label {
   color: hsl(var(--foreground)) !important;
   font-weight: 600 !important;
   font-size: 0.875rem !important;
-  padding: 12px 16px 8px 16px !important;
+  padding: 12px 16px !important;
   margin: 0 !important;
   border-bottom: 1px solid hsl(var(--border)) !important;
   background: hsl(var(--muted) / 0.5) !important;
 }
 
 .recharts-tooltip-item-list {
-  padding: 8px 16px 12px 16px !important;
+  padding: 12px 16px !important;
   margin: 0 !important;
+  backdrop-filter: blur(8px);
 }
 
-/* FIXED: Color-coded tooltip items with proper spacing */
 .recharts-tooltip-item {
   color: hsl(var(--foreground)) !important;
   font-size: 0.8rem !important;
   display: flex !important;
   align-items: center !important;
-  gap: 8px !important;
+  justify-content: space-between !important;
   padding: 4px 0 !important;
   margin: 0 !important;
-  position: relative;
-  padding-left: 16px !important; /* Space for color dot */
+  gap: 12px;
 }
 
-/* Add color dots before each tooltip item - FIXED SELECTORS */
+/* Color dots for all tooltip items */
+.recharts-tooltip-item::before {
+  content: "" !important;
+  width: 12px !important;
+  height: 12px !important;
+  border-radius: 50% !important;
+  flex-shrink: 0 !important;
+}
+
+/* Temperature - red */
 .recharts-tooltip-item:first-child::before {
-  content: "" !important;
-  position: absolute !important;
-  left: 0 !important;
-  top: 50% !important;
-  transform: translateY(-50%) !important;
-  width: 10px !important;
-  height: 10px !important;
-  border-radius: 50% !important;
-  background-color: #ef4444 !important; /* Temperature - red */
+  background-color: #ef4444 !important;
 }
 
+/* Humidity - blue */
 .recharts-tooltip-item:nth-child(2)::before {
-  content: "" !important;
-  position: absolute !important;
-  left: 0 !important;
-  top: 50% !important;
-  transform: translateY(-50%) !important;
-  width: 10px !important;
-  height: 10px !important;
-  border-radius: 50% !important;
-  background-color: #3b82f6 !important; /* Humidity - blue */
+  background-color: #3b82f6 !important;
 }
 
+/* Power - green */
 .recharts-tooltip-item:nth-child(3)::before {
-  content: "" !important;
-  position: absolute !important;
-  left: 0 !important;
-  top: 50% !important;
-  transform: translateY(-50%) !important;
-  width: 10px !important;
-  height: 10px !important;
-  border-radius: 50% !important;
-  background-color: #10b981 !important; /* Power - green */
+  background-color: #10b981 !important;
 }
 
+/* Apparent Power - amber */
 .recharts-tooltip-item:nth-child(4)::before {
-  content: "" !important;
-  position: absolute !important;
-  left: 0 !important;
-  top: 50% !important;
-  transform: translateY(-50%) !important;
-  width: 10px !important;
-  height: 10px !important;
-  border-radius: 50% !important;
-  background-color: #f59e0b !important; /* Apparent Power - amber */
+  background-color: #f59e0b !important;
 }
 
+/* Reactive Power - violet */
 .recharts-tooltip-item:nth-child(5)::before {
-  content: "" !important;
-  position: absolute !important;
-  left: 0 !important;
-  top: 50% !important;
-  transform: translateY(-50%) !important;
-  width: 10px !important;
-  height: 10px !important;
-  border-radius: 50% !important;
-  background-color: #8b5cf6 !important; /* Reactive Power - violet */
+  background-color: #8b5cf6 !important;
 }
 
+/* Voltage - cyan */
 .recharts-tooltip-item:nth-child(6)::before {
-  content: "" !important;
-  position: absolute !important;
-  left: 0 !important;
-  top: 50% !important;
-  transform: translateY(-50%) !important;
-  width: 10px !important;
-  height: 10px !important;
-  border-radius: 50% !important;
-  background-color: #06b6d4 !important; /* Voltage - cyan */
+  background-color: #06b6d4 !important;
 }
 
+/* Current - fuchsia */
 .recharts-tooltip-item:nth-child(7)::before {
-  content: "" !important;
-  position: absolute !important;
-  left: 0 !important;
-  top: 50% !important;
-  transform: translateY(-50%) !important;
-  width: 10px !important;
-  height: 10px !important;
-  border-radius: 50% !important;
-  background-color: #d946ef !important; /* Current - fuchsia */
+  background-color: #d946ef !important;
 }
 
+/* Energy - lime */
 .recharts-tooltip-item:nth-child(8)::before {
-  content: "" !important;
-  position: absolute !important;
-  left: 0 !important;
-  top: 50% !important;
-  transform: translateY(-50%) !important;
-  width: 10px !important;
-  height: 10px !important;
-  border-radius: 50% !important;
-  background-color: #84cc16 !important; /* Energy - lime */
+  background-color: #84cc16 !important;
 }
 
+/* Frequency - orange */
 .recharts-tooltip-item:nth-child(9)::before {
-  content: "" !important;
-  position: absolute !important;
-  left: 0 !important;
-  top: 50% !important;
-  transform: translateY(-50%) !important;
-  width: 10px !important;
-  height: 10px !important;
-  border-radius: 50% !important;
-  background-color: #f97316 !important; /* Frequency - orange */
+  background-color: #f97316 !important;
 }
 
+/* Power Factor - indigo */
 .recharts-tooltip-item:nth-child(10)::before {
-  content: "" !important;
-  position: absolute !important;
-  left: 0 !important;
-  top: 50% !important;
-  transform: translateY(-50%) !important;
-  width: 10px !important;
-  height: 10px !important;
-  border-radius: 50% !important;
-  background-color: #6366f1 !important; /* Power Factor - indigo */
+  background-color: #6366f1 !important;
 }
 
 .recharts-tooltip-item-name {
   font-weight: 500 !important;
-  margin-left: 0 !important;
+  margin-left: 8px !important;
+  flex: 1;
 }
 
 .recharts-tooltip-item-value {
@@ -295,30 +233,27 @@ body {
 /* Mobile tooltip adjustments */
 @media (max-width: 640px) {
   .recharts-default-tooltip {
-    max-width: 220px;
-    transform: scale(0.9);
-    transform-origin: center;
-    margin: 4px !important; /* Even smaller margin on mobile */
+    max-width: 240px;
+    margin: 4px !important;
   }
 
   .recharts-tooltip-label {
     font-size: 0.8rem !important;
-    padding: 10px 12px 6px 12px !important;
+    padding: 10px 12px !important;
   }
 
   .recharts-tooltip-item-list {
-    padding: 6px 12px 10px 12px !important;
+    padding: 10px 12px !important;
   }
 
   .recharts-tooltip-item {
     font-size: 0.75rem !important;
-    gap: 6px !important;
-    padding-left: 14px !important; /* Reduced space for color dot on mobile */
+    gap: 8px;
   }
 
   .recharts-tooltip-item::before {
-    width: 8px !important;
-    height: 8px !important;
+    width: 10px !important;
+    height: 10px !important;
   }
 }
 
@@ -410,6 +345,76 @@ samp {
   }
 }
 
+/* Mobile layout improvements for analytics cards */
+@media (max-width: 768px) {
+  .environment-analytics-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1rem !important;
+  }
+
+  .stat-card-mobile {
+    padding: 1rem !important;
+  }
+
+  .stat-card-mobile .current-value {
+    font-size: 1.5rem !important;
+    margin-bottom: 0.75rem !important;
+  }
+
+  /* Force 2-column layout for temperature/humidity analytics */
+  .analytics-grid-mobile {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 0.75rem !important;
+  }
+
+  .analytics-card-mobile {
+    min-height: auto !important;
+    padding: 1rem !important;
+  }
+
+  .analytics-current-value {
+    font-size: 1.75rem !important;
+    line-height: 1.2 !important;
+  }
+
+  .analytics-stats-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 0.5rem !important;
+    margin-top: 0.75rem !important;
+  }
+
+  .analytics-stat-item {
+    text-align: center !important;
+    padding: 0.25rem !important;
+  }
+
+  .analytics-stat-value {
+    font-size: 0.875rem !important;
+    font-weight: 600 !important;
+  }
+
+  .analytics-stat-label {
+    font-size: 0.7rem !important;
+    margin-top: 0.125rem !important;
+  }
+}
+
+/* Extra small mobile devices */
+@media (max-width: 380px) {
+  .analytics-grid-mobile {
+    grid-template-columns: 1fr !important;
+    gap: 0.5rem !important;
+  }
+
+  .analytics-card-mobile {
+    padding: 0.75rem !important;
+  }
+
+  .analytics-current-value {
+    font-size: 1.5rem !important;
+  }
+}
+
 /* Touch device improvements */
 @media (hover: none) and (pointer: coarse) {
   button,
@@ -421,6 +426,16 @@ samp {
   .recharts-tooltip-item {
     pointer-events: none;
   }
+
+  /* Better touch targets for mobile */
+  .mobile-touch-target {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  .chart-container-mobile {
+    padding: 8px 4px !important;
+  }
 }
 
 /* High-DPI screen optimizations */
@@ -428,6 +443,15 @@ samp {
   body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Crisper charts on high-DPI displays */
+  .recharts-curve {
+    shape-rendering: geometricPrecision;
+  }
+
+  .recharts-line {
+    shape-rendering: geometricPrecision;
   }
 }
 
@@ -440,6 +464,11 @@ samp {
   .recharts-default-tooltip {
     display: none !important;
   }
+
+  /* Ensure charts print properly */
+  .recharts-surface {
+    print-color-adjust: exact;
+  }
 }
 
 /* Reduced motion support */
@@ -448,5 +477,202 @@ samp {
     transition-duration: 0.01ms !important;
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
+  }
+
+  /* Disable chart animations */
+  .recharts-line {
+    animation: none !important;
+  }
+
+  .recharts-area {
+    animation: none !important;
+  }
+
+  .recharts-bar {
+    animation: none !important;
+  }
+}
+
+/* Dark mode specific chart improvements */
+@media (prefers-color-scheme: dark) {
+  .recharts-cartesian-grid-horizontal line,
+  .recharts-cartesian-grid-vertical line {
+    stroke: hsl(var(--border) / 0.3);
+  }
+
+  .recharts-reference-line line {
+    stroke: hsl(var(--muted-foreground) / 0.5);
+  }
+}
+
+/* Environment chart specific improvements */
+.environment-chart-container {
+  position: relative;
+}
+
+.environment-chart-y-axis {
+  font-weight: 600;
+}
+
+/* Loading states */
+.chart-loading-skeleton {
+  background: linear-gradient(
+    90deg,
+    hsl(var(--muted) / 0.6) 25%,
+    hsl(var(--muted) / 0.8) 50%,
+    hsl(var(--muted) / 0.6) 75%
+  );
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Custom scrollbar for chart containers */
+.chart-container::-webkit-scrollbar {
+  height: 6px;
+}
+
+.chart-container::-webkit-scrollbar-track {
+  background: hsl(var(--muted));
+  border-radius: 3px;
+}
+
+.chart-container::-webkit-scrollbar-thumb {
+  background: hsl(var(--muted-foreground) / 0.3);
+  border-radius: 3px;
+}
+
+.chart-container::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--muted-foreground) / 0.5);
+}
+
+/* Legend improvements */
+.recharts-legend-wrapper {
+  padding-top: 8px !important;
+}
+
+.recharts-default-legend {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+/* Ensure proper contrast in both light and dark modes */
+.recharts-text {
+  fill: hsl(var(--foreground)) !important;
+}
+
+.recharts-cartesian-axis-tick-value {
+  fill: hsl(var(--muted-foreground)) !important;
+}
+
+.recharts-legend-item-text {
+  fill: hsl(var(--foreground)) !important;
+}
+
+/* Hover effects for better interactivity */
+.recharts-line:hover {
+  filter: brightness(1.1);
+}
+
+.recharts-active-dot {
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+/* Mobile-first responsive design for chart containers */
+@media (max-width: 640px) {
+  .chart-container-mobile {
+    margin: 0 -0.5rem;
+    padding: 0.5rem;
+  }
+
+  .recharts-legend-wrapper {
+    padding-top: 4px !important;
+  }
+
+  .recharts-default-legend {
+    gap: 12px;
+  }
+}
+
+/* Environment chart specific styling for better temperature visibility */
+.environment-temperature-line {
+  stroke-width: 2.5;
+}
+
+.environment-humidity-line {
+  stroke-width: 2.5;
+}
+
+/* Improved Y-axis spacing for environment chart */
+.environment-y-axis-left {
+  font-weight: 600;
+}
+
+.environment-y-axis-right {
+  font-weight: 600;
+}
+
+/* Better mobile experience for environment analytics */
+@media (max-width: 768px) {
+  .environment-stats-container {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+  }
+
+  .environment-stat-card {
+    padding: 1rem;
+    min-height: 120px;
+  }
+
+  .environment-stat-current {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+
+  .environment-stat-details {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+  }
+
+  .environment-stat-item {
+    text-align: center;
+  }
+
+  .environment-stat-value {
+    font-size: 0.875rem;
+    font-weight: 600;
+  }
+
+  .environment-stat-label {
+    font-size: 0.7rem;
+    color: hsl(var(--muted-foreground));
+  }
+}
+
+/* Extra small screen adjustments */
+@media (max-width: 380px) {
+  .environment-stats-container {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+
+  .environment-stat-card {
+    padding: 0.75rem;
+    min-height: 110px;
+  }
+
+  .environment-stat-current {
+    font-size: 1.5rem;
   }
 }
