@@ -20,14 +20,10 @@ export default function ChartContainer({
 }: ChartContainerProps) {
   if (isLoading) {
     return (
-      <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-4">
-        <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-          {title}
-        </h3>
+      <div className="bg-white rounded-lg border border-gray-200 p-4">
+        <h3 className="text-lg font-semibold text-gray-900 mb-4">{title}</h3>
         <div className="h-[300px] flex items-center justify-center">
-          <div className="text-gray-500 dark:text-gray-400">
-            {loadingMessage}
-          </div>
+          <div className="text-gray-500">{loadingMessage}</div>
         </div>
       </div>
     );
@@ -35,22 +31,18 @@ export default function ChartContainer({
 
   if (isEmpty) {
     return (
-      <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-4">
-        <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-          {title}
-        </h3>
+      <div className="bg-white rounded-lg border border-gray-200 p-4">
+        <h3 className="text-lg font-semibold text-gray-900 mb-4">{title}</h3>
         <div className="h-[300px] flex items-center justify-center">
-          <div className="text-gray-500 dark:text-gray-400">{emptyMessage}</div>
+          <div className="text-gray-500">{emptyMessage}</div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-4">
-      <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-        {title}
-      </h3>
+    <div className="bg-white rounded-lg border border-gray-200 p-4">
+      <h3 className="text-lg font-semibold text-gray-900 mb-4">{title}</h3>
       {children}
     </div>
   );

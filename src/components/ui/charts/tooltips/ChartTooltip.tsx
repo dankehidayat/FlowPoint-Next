@@ -71,16 +71,9 @@ export default function ChartTooltip({
   }
 
   return (
-    <div className="bg-white/20 dark:bg-gray-900/20 backdrop-blur-xl border border-white/30 dark:border-gray-700/30 rounded-lg shadow-2xl overflow-hidden">
-      {/* Frosted glass overlay effect */}
-      <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-white/5 dark:from-gray-100/5 dark:to-gray-100/0 rounded-lg pointer-events-none" />
-
-      <div className="relative bg-gradient-to-r from-white/40 to-white/20 dark:from-gray-800/40 dark:to-gray-700/20 px-3 py-2 border-b border-white/20 dark:border-gray-600/20">
-        <p className="text-sm text-gray-900 dark:text-white font-medium drop-shadow-sm">
-          {label}
-        </p>
-      </div>
-      <div className="relative px-3 py-2 space-y-1">
+    <div className="material-tooltip">
+      <div className="material-tooltip-label">{label}</div>
+      <div className="material-tooltip-list">
         {payload.map((entry: any, index: number) => {
           const unit = unitMapper(entry.dataKey || entry.name);
           const formattedValue = valueFormatter(
@@ -89,20 +82,13 @@ export default function ChartTooltip({
           );
 
           return (
-            <div
-              key={index}
-              className="flex items-center justify-between text-sm"
-            >
-              <div className="flex items-center gap-2">
-                <div
-                  className="w-2 h-2 rounded-full flex-shrink-0 border border-white/50"
-                  style={{ backgroundColor: entry.color }}
-                />
-                <span className="text-gray-900 dark:text-white font-medium drop-shadow-sm">
-                  {entry.name}
-                </span>
-              </div>
-              <span className="font-bold text-gray-900 dark:text-white ml-4 drop-shadow-sm">
+            <div key={index} className="material-tooltip-item">
+              <div
+                className="material-tooltip-dot"
+                style={{ backgroundColor: entry.color }}
+              />
+              <span className="material-tooltip-name">{entry.name}</span>
+              <span className="material-tooltip-value">
                 {formattedValue}
                 {unit ? ` ${unit}` : ""}
               </span>

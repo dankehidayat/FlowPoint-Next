@@ -34,22 +34,27 @@
   --chart-5: 27 87% 67%;
 }
 
+/* Force light theme */
+html {
+  color-scheme: light !important;
+}
+
 * {
-  border-color: hsl(var(--border));
+  border-color: hsl(var(--border)) !important;
 }
 
 /* Base mobile-first styles */
 body {
-  background-color: hsl(var(--background));
-  color: hsl(var(--foreground));
-  font-family: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
-  font-feature-settings: "rlig" 1, "calt" 1;
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  font-size: 14px;
-  line-height: 1.5;
+  background-color: hsl(var(--background)) !important;
+  color: hsl(var(--foreground)) !important;
+  font-family: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif !important;
+  font-feature-settings: "rlig" 1, "calt" 1 !important;
+  font-synthesis: none !important;
+  text-rendering: optimizeLegibility !important;
+  -webkit-font-smoothing: antialiased !important;
+  -moz-osx-font-smoothing: grayscale !important;
+  font-size: 14px !important;
+  line-height: 1.5 !important;
 }
 
 /* Ensure all text elements use proper colors */
@@ -69,126 +74,160 @@ label,
 input,
 textarea,
 select {
-  color: hsl(var(--foreground));
+  color: hsl(var(--foreground)) !important;
 }
 
-/* Card styling */
+/* Enhanced Card styling with !important */
 .card,
 .stat-card,
 .analytics-card,
-.dashboard-card {
-  background-color: hsl(var(--card));
-  color: hsl(var(--card-foreground));
-  border: 1px solid hsl(var(--border));
+.dashboard-card,
+.energy-card,
+.environment-card,
+.panel-card,
+[class*="card"] {
+  background-color: hsl(var(--card)) !important;
+  color: hsl(var(--card-foreground)) !important;
+  border: 1px solid hsl(var(--border)) !important;
+  border-radius: var(--radius) !important;
+}
+
+/* Background utility classes with !important */
+.bg-card {
+  background-color: hsl(var(--card)) !important;
+}
+
+.bg-background {
+  background-color: hsl(var(--background)) !important;
+}
+
+.bg-white {
+  background-color: white !important;
+}
+
+.text-card-foreground {
+  color: hsl(var(--card-foreground)) !important;
+}
+
+/* Ensure specific energy and environment panels are light */
+.energy-panel,
+.environment-panel,
+.energy-card,
+.environment-card,
+.energy-stat,
+.environment-stat {
+  background-color: hsl(var(--card)) !important;
+  color: hsl(var(--card-foreground)) !important;
+  border: 1px solid hsl(var(--border)) !important;
 }
 
 /* Muted foreground colors */
 .text-muted-foreground {
-  color: hsl(var(--muted-foreground));
+  color: hsl(var(--muted-foreground)) !important;
 }
 
 .text-foreground\/80 {
-  color: hsl(var(--muted-foreground));
+  color: hsl(var(--muted-foreground)) !important;
 }
 
 /* Consistent icon background styling */
 .icon-bg-green {
-  background-color: rgb(220 252 231 / 0.8);
-  border: 1px solid rgb(187 247 208 / 0.5);
-  border-radius: 0.75rem;
-  padding: 0.5rem;
-  backdrop-filter: blur(8px);
+  background-color: rgb(220 252 231 / 0.8) !important;
+  border: 1px solid rgb(187 247 208 / 0.5) !important;
+  border-radius: 0.75rem !important;
+  padding: 0.5rem !important;
+  backdrop-filter: blur(8px) !important;
 }
 
 .icon-bg-yellow {
-  background-color: rgb(254 249 195 / 0.8);
-  border: 1px solid rgb(253 224 71 / 0.5);
-  border-radius: 0.75rem;
-  padding: 0.5rem;
-  backdrop-filter: blur(8px);
+  background-color: rgb(254 249 195 / 0.8) !important;
+  border: 1px solid rgb(253 224 71 / 0.5) !important;
+  border-radius: 0.75rem !important;
+  padding: 0.5rem !important;
+  backdrop-filter: blur(8px) !important;
 }
 
 .icon-bg-indigo {
-  background-color: rgb(224 231 255 / 0.8);
-  border: 1px solid rgb(199 210 254 / 0.5);
-  border-radius: 0.75rem;
-  padding: 0.5rem;
-  backdrop-filter: blur(8px);
+  background-color: rgb(224 231 255 / 0.8) !important;
+  border: 1px solid rgb(199 210 254 / 0.5) !important;
+  border-radius: 0.75rem !important;
+  padding: 0.5rem !important;
+  backdrop-filter: blur(8px) !important;
 }
 
 .icon-bg-cyan {
-  background-color: rgb(207 250 254 / 0.8);
-  border: 1px solid rgb(165 243 252 / 0.5);
-  border-radius: 0.75rem;
-  padding: 0.5rem;
-  backdrop-filter: blur(8px);
+  background-color: rgb(207 250 254 / 0.8) !important;
+  border: 1px solid rgb(165 243 252 / 0.5) !important;
+  border-radius: 0.75rem !important;
+  padding: 0.5rem !important;
+  backdrop-filter: blur(8px) !important;
 }
 
 .icon-bg-blue {
-  background-color: rgb(219 234 254 / 0.8);
-  border: 1px solid rgb(191 219 254 / 0.5);
-  border-radius: 0.75rem;
-  padding: 0.5rem;
-  backdrop-filter: blur(8px);
+  background-color: rgb(219 234 254 / 0.8) !important;
+  border: 1px solid rgb(191 219 254 / 0.5) !important;
+  border-radius: 0.75rem !important;
+  padding: 0.5rem !important;
+  backdrop-filter: blur(8px) !important;
 }
 
 .icon-bg-purple {
-  background-color: rgb(233 213 255 / 0.8);
-  border: 1px solid rgb(216 180 254 / 0.5);
-  border-radius: 0.75rem;
-  padding: 0.5rem;
-  backdrop-filter: blur(8px);
+  background-color: rgb(233 213 255 / 0.8) !important;
+  border: 1px solid rgb(216 180 254 / 0.5) !important;
+  border-radius: 0.75rem !important;
+  padding: 0.5rem !important;
+  backdrop-filter: blur(8px) !important;
 }
 
 .icon-bg-orange {
-  background-color: rgb(255 237 213 / 0.8);
-  border: 1px solid rgb(253 186 116 / 0.5);
-  border-radius: 0.75rem;
-  padding: 0.5rem;
-  backdrop-filter: blur(8px);
+  background-color: rgb(255 237 213 / 0.8) !important;
+  border: 1px solid rgb(253 186 116 / 0.5) !important;
+  border-radius: 0.75rem !important;
+  padding: 0.5rem !important;
+  backdrop-filter: blur(8px) !important;
 }
 
 .icon-bg-teal {
-  background-color: rgb(204 251 241 / 0.8);
-  border: 1px solid rgb(153 246 228 / 0.5);
-  border-radius: 0.75rem;
-  padding: 0.5rem;
-  backdrop-filter: blur(8px);
+  background-color: rgb(204 251 241 / 0.8) !important;
+  border: 1px solid rgb(153 246 228 / 0.5) !important;
+  border-radius: 0.75rem !important;
+  padding: 0.5rem !important;
+  backdrop-filter: blur(8px) !important;
 }
 
 .icon-bg-red {
-  background-color: rgb(254 226 226 / 0.8);
-  border: 1px solid rgb(254 202 202 / 0.5);
-  border-radius: 0.75rem;
-  padding: 0.5rem;
-  backdrop-filter: blur(8px);
+  background-color: rgb(254 226 226 / 0.8) !important;
+  border: 1px solid rgb(254 202 202 / 0.5) !important;
+  border-radius: 0.75rem !important;
+  padding: 0.5rem !important;
+  backdrop-filter: blur(8px) !important;
 }
 
 /* Base icon container */
 .icon-container {
-  padding: 0.5rem;
-  border-radius: 0.75rem;
-  backdrop-filter: blur(8px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  padding: 0.5rem !important;
+  border-radius: 0.75rem !important;
+  backdrop-filter: blur(8px) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
 }
 
 /* Circular background for metrics icons */
 .metric-icon-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 2.5rem;
-  height: 2.5rem;
-  border-radius: 50%;
-  background: hsl(var(--muted));
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 2.5rem !important;
+  height: 2.5rem !important;
+  border-radius: 50% !important;
+  background: hsl(var(--muted)) !important;
 }
 
 /* Responsive icon sizes */
 @media (max-width: 640px) {
   .icon-container {
-    padding: 0.375rem;
+    padding: 0.375rem !important;
   }
 
   .smart-recommendation-icon {
@@ -210,14 +249,14 @@ select {
 /* Tablet styles */
 @media (min-width: 768px) {
   body {
-    font-size: 15px;
+    font-size: 15px !important;
   }
 }
 
 /* Desktop styles */
 @media (min-width: 1024px) {
   body {
-    font-size: 16px;
+    font-size: 16px !important;
   }
 }
 
@@ -255,19 +294,19 @@ select {
 /* Small mobile devices */
 @media (max-width: 640px) {
   .mobile-text-sm {
-    font-size: 0.875rem;
+    font-size: 0.875rem !important;
   }
 
   .mobile-text-xs {
-    font-size: 0.75rem;
+    font-size: 0.75rem !important;
   }
 
   .mobile-p-3 {
-    padding: 0.75rem;
+    padding: 0.75rem !important;
   }
 
   .mobile-p-4 {
-    padding: 1rem;
+    padding: 1rem !important;
   }
 
   /* Time range selector mobile optimization */
@@ -295,98 +334,203 @@ select {
 /* Custom scrollbar */
 @media (min-width: 768px) {
   ::-webkit-scrollbar {
-    width: 8px;
+    width: 8px !important;
   }
 
   ::-webkit-scrollbar-track {
-    background: hsl(var(--muted));
-    border-radius: 4px;
+    background: hsl(var(--muted)) !important;
+    border-radius: 4px !important;
   }
 
   ::-webkit-scrollbar-thumb {
-    background: hsl(var(--muted-foreground) / 0.4);
-    border-radius: 4px;
+    background: hsl(var(--muted-foreground) / 0.4) !important;
+    border-radius: 4px !important;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: hsl(var(--muted-foreground) / 0.6);
+    background: hsl(var(--muted-foreground) / 0.6) !important;
   }
 }
 
-/* Enhanced Recharts Tooltip Styling */
-.recharts-default-tooltip {
-  background-color: hsl(var(--popover)) !important;
-  border: 1px solid hsl(var(--border)) !important;
-  border-radius: var(--radius) !important;
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
-    0 10px 10px -5px rgba(0, 0, 0, 0.04) !important;
-  backdrop-filter: blur(8px) !important;
+/* MATERIAL DESIGN TOOLTIP - CUSTOM CLASSES */
+.material-tooltip {
+  background: #ffffff !important;
+  border: 1px solid #e5e7eb !important;
+  border-radius: 12px !important;
+  box-shadow: 0 10px 25px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(0, 0, 0, 0.05) !important;
   padding: 0 !important;
-  overflow: hidden;
-  max-width: 280px;
+  overflow: hidden !important;
+  max-width: 280px !important;
   margin: 8px !important;
+  position: relative !important;
+  font-family: "Plus Jakarta Sans", system-ui, sans-serif !important;
+  backdrop-filter: none !important;
 }
 
-.recharts-tooltip-label {
-  color: hsl(var(--foreground)) !important;
+.material-tooltip-label {
+  background: #f8fafc !important;
+  color: #1f2937 !important;
   font-weight: 600 !important;
   font-size: 0.875rem !important;
   padding: 12px 16px !important;
   margin: 0 !important;
-  border-bottom: 1px solid hsl(var(--border)) !important;
-  background: hsl(var(--muted) / 0.5) !important;
+  border-bottom: 1px solid #f1f5f9 !important;
+  position: relative !important;
+  z-index: 2 !important;
+  letter-spacing: -0.01em !important;
 }
 
-.recharts-tooltip-item-list {
+.material-tooltip-list {
+  background: #ffffff !important;
   padding: 12px 16px !important;
   margin: 0 !important;
-  backdrop-filter: blur(8px);
+  position: relative !important;
+  z-index: 2 !important;
 }
 
-.recharts-tooltip-item {
-  color: hsl(var(--foreground)) !important;
-  font-size: 0.8rem !important;
+.material-tooltip-item {
+  color: #374151 !important;
+  font-size: 0.8125rem !important;
   display: flex !important;
   align-items: center !important;
   justify-content: space-between !important;
-  padding: 4px 0 !important;
+  padding: 6px 0 !important;
   margin: 0 !important;
-  gap: 12px;
+  gap: 12px !important;
+  font-weight: 500 !important;
+  line-height: 1.4 !important;
 }
 
-/* Color dots for tooltip items */
+.material-tooltip-dot {
+  width: 12px !important;
+  height: 12px !important;
+  border-radius: 6px !important;
+  flex-shrink: 0 !important;
+  border: 2px solid #ffffff !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06) !important;
+}
+
+.material-tooltip-name {
+  font-weight: 500 !important;
+  margin-left: 8px !important;
+  flex: 1 !important;
+  color: #374151 !important;
+  letter-spacing: -0.01em !important;
+  font-size: 0.8125rem !important;
+}
+
+.material-tooltip-value {
+  font-weight: 600 !important;
+  margin-left: auto !important;
+  color: #111827 !important;
+  letter-spacing: -0.01em !important;
+  font-size: 0.8125rem !important;
+  font-feature-settings: "tnum" 1, "cv05" 1 !important;
+  font-variant-numeric: tabular-nums !important;
+}
+
+/* COMPLETELY OVERRIDE RECHARTS DEFAULT TOOLTIP */
+.recharts-default-tooltip {
+  background: #ffffff !important;
+  border: 1px solid #e5e7eb !important;
+  border-radius: 12px !important;
+  box-shadow: 0 10px 25px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  backdrop-filter: none !important;
+  font-family: "Plus Jakarta Sans", system-ui, sans-serif !important;
+}
+
+.recharts-tooltip-label {
+  background: #f8fafc !important;
+  color: #1f2937 !important;
+  font-weight: 600 !important;
+  font-size: 0.875rem !important;
+  padding: 12px 16px !important;
+  margin: 0 !important;
+  border-bottom: 1px solid #f1f5f9 !important;
+  letter-spacing: -0.01em !important;
+}
+
+.recharts-tooltip-item-list {
+  background: #ffffff !important;
+  padding: 12px 16px !important;
+  margin: 0 !important;
+}
+
+.recharts-tooltip-item {
+  color: #374151 !important;
+  font-size: 0.8125rem !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 6px 0 !important;
+  margin: 0 !important;
+  gap: 12px !important;
+  font-weight: 500 !important;
+  line-height: 1.4 !important;
+}
+
 .recharts-tooltip-item::before {
   content: "" !important;
   width: 12px !important;
   height: 12px !important;
-  border-radius: 50% !important;
+  border-radius: 6px !important;
   flex-shrink: 0 !important;
+  border: 2px solid #ffffff !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06) !important;
 }
 
-/* Temperature - red */
-.recharts-tooltip-item:first-child::before {
+.recharts-tooltip-item:nth-child(1)::before {
   background-color: #ef4444 !important;
 }
-
-/* Humidity - blue */
 .recharts-tooltip-item:nth-child(2)::before {
   background-color: #3b82f6 !important;
 }
-
-/* Power - green */
 .recharts-tooltip-item:nth-child(3)::before {
   background-color: #10b981 !important;
+}
+.recharts-tooltip-item:nth-child(4)::before {
+  background-color: #8b5cf6 !important;
+}
+.recharts-tooltip-item:nth-child(5)::before {
+  background-color: #f59e0b !important;
+}
+.recharts-tooltip-item:nth-child(6)::before {
+  background-color: #ec4899 !important;
+}
+.recharts-tooltip-item:nth-child(7)::before {
+  background-color: #06b6d4 !important;
+}
+.recharts-tooltip-item:nth-child(8)::before {
+  background-color: #84cc16 !important;
+}
+.recharts-tooltip-item:nth-child(9)::before {
+  background-color: #f97316 !important;
+}
+.recharts-tooltip-item:nth-child(10)::before {
+  background-color: #6366f1 !important;
 }
 
 .recharts-tooltip-item-name {
   font-weight: 500 !important;
   margin-left: 8px !important;
-  flex: 1;
+  flex: 1 !important;
+  color: #374151 !important;
+  letter-spacing: -0.01em !important;
+  font-size: 0.8125rem !important;
 }
 
 .recharts-tooltip-item-value {
   font-weight: 600 !important;
   margin-left: auto !important;
+  color: #111827 !important;
+  letter-spacing: -0.01em !important;
+  font-size: 0.8125rem !important;
+  font-feature-settings: "tnum" 1, "cv05" 1 !important;
+  font-variant-numeric: tabular-nums !important;
 }
 
 .recharts-tooltip-item-separator {
@@ -401,22 +545,33 @@ select {
 .recharts-cartesian-axis-tick-value {
   font-family: "Plus Jakarta Sans", system-ui, sans-serif !important;
   font-weight: 500 !important;
-  fill: hsl(var(--foreground)) !important;
+  fill: #6b7280 !important;
+  font-size: 0.75rem !important;
 }
 
 .recharts-legend-item-text {
   font-family: "Plus Jakarta Sans", system-ui, sans-serif !important;
   font-weight: 500 !important;
-  fill: hsl(var(--foreground)) !important;
+  fill: #374151 !important;
+  font-size: 0.8rem !important;
 }
 
 .recharts-text {
-  fill: hsl(var(--foreground)) !important;
+  fill: #374151 !important;
+  font-family: "Plus Jakarta Sans", system-ui, sans-serif !important;
+}
+
+.recharts-line {
+  stroke-width: 2px !important;
+}
+
+.recharts-area {
+  opacity: 0.6 !important;
 }
 
 /* Trend animation */
 .trend-animation {
-  animation: trendPulse 2s ease-in-out infinite;
+  animation: trendPulse 2s ease-in-out infinite !important;
 }
 
 @keyframes trendPulse {
@@ -434,79 +589,98 @@ select {
 /* Smooth transitions */
 * {
   transition: background-color 0.3s ease, border-color 0.3s ease,
-    color 0.3s ease, fill 0.3s ease, stroke 0.3s ease;
+    color 0.3s ease, fill 0.3s ease, stroke 0.3s ease !important;
 }
 
 /* Focus states for accessibility */
 button:focus-visible,
 a:focus-visible {
-  outline: 2px solid hsl(var(--ring));
-  outline-offset: 2px;
+  outline: 2px solid hsl(var(--ring)) !important;
+  outline-offset: 2px !important;
 }
 
 /* Additional utility classes for consistent icon backgrounds */
 .icon-bg-gray {
-  background-color: rgb(243 244 246 / 0.8);
-  border: 1px solid rgb(229 231 235 / 0.5);
-  border-radius: 0.75rem;
-  padding: 0.5rem;
-  backdrop-filter: blur(8px);
+  background-color: rgb(243 244 246 / 0.8) !important;
+  border: 1px solid rgb(229 231 235 / 0.5) !important;
+  border-radius: 0.75rem !important;
+  padding: 0.5rem !important;
+  backdrop-filter: blur(8px) !important;
 }
 
 .icon-bg-pink {
-  background-color: rgb(253 242 248 / 0.8);
-  border: 1px solid rgb(252 231 243 / 0.5);
-  border-radius: 0.75rem;
-  padding: 0.5rem;
-  backdrop-filter: blur(8px);
+  background-color: rgb(253 242 248 / 0.8) !important;
+  border: 1px solid rgb(252 231 243 / 0.5) !important;
+  border-radius: 0.75rem !important;
+  padding: 0.5rem !important;
+  backdrop-filter: blur(8px) !important;
 }
 
 .icon-bg-rose {
-  background-color: rgb(255 241 242 / 0.8);
-  border: 1px solid rgb(255 228 230 / 0.5);
-  border-radius: 0.75rem;
-  padding: 0.5rem;
-  backdrop-filter: blur(8px);
+  background-color: rgb(255 241 242 / 0.8) !important;
+  border: 1px solid rgb(255 228 230 / 0.5) !important;
+  border-radius: 0.75rem !important;
+  padding: 0.5rem !important;
+  backdrop-filter: blur(8px) !important;
 }
 
 .icon-bg-emerald {
-  background-color: rgb(209 250 229 / 0.8);
-  border: 1px solid rgb(167 243 208 / 0.5);
-  border-radius: 0.75rem;
-  padding: 0.5rem;
-  backdrop-filter: blur(8px);
+  background-color: rgb(209 250 229 / 0.8) !important;
+  border: 1px solid rgb(167 243 208 / 0.5) !important;
+  border-radius: 0.75rem !important;
+  padding: 0.5rem !important;
+  backdrop-filter: blur(8px) !important;
 }
 
 .icon-bg-violet {
-  background-color: rgb(237 233 254 / 0.8);
-  border: 1px solid rgb(221 214 254 / 0.5);
-  border-radius: 0.75rem;
-  padding: 0.5rem;
-  backdrop-filter: blur(8px);
+  background-color: rgb(237 233 254 / 0.8) !important;
+  border: 1px solid rgb(221 214 254 / 0.5) !important;
+  border-radius: 0.75rem !important;
+  padding: 0.5rem !important;
+  backdrop-filter: blur(8px) !important;
 }
 
 .icon-bg-fuchsia {
-  background-color: rgb(250 232 255 / 0.8);
-  border: 1px solid rgb(245 208 254 / 0.5);
-  border-radius: 0.75rem;
-  padding: 0.5rem;
-  backdrop-filter: blur(8px);
+  background-color: rgb(250 232 255 / 0.8) !important;
+  border: 1px solid rgb(245 208 254 / 0.5) !important;
+  border-radius: 0.75rem !important;
+  padding: 0.5rem !important;
+  backdrop-filter: blur(8px) !important;
 }
 
 .icon-bg-sky {
-  background-color: rgb(224 242 254 / 0.8);
-  border: 1px solid rgb(186 230 253 / 0.5);
-  border-radius: 0.75rem;
-  padding: 0.5rem;
-  backdrop-filter: blur(8px);
+  background-color: rgb(224 242 254 / 0.8) !important;
+  border: 1px solid rgb(186 230 253 / 0.5) !important;
+  border-radius: 0.75rem !important;
+  padding: 0.5rem !important;
+  backdrop-filter: blur(8px) !important;
 }
 
 .icon-bg-lime {
-  background-color: rgb(236 252 203 / 0.8);
-  border: 1px solid rgb(217 249 157 / 0.5);
-  border-radius: 0.75rem;
-  padding: 0.5rem;
-  backdrop-filter: blur(8px);
+  background-color: rgb(236 252 203 / 0.8) !important;
+  border: 1px solid rgb(217 249 157 / 0.5) !important;
+  border-radius: 0.75rem !important;
+  padding: 0.5rem !important;
+  backdrop-filter: blur(8px) !important;
+}
+
+/* Force light theme for all panels and sections */
+.energy-section,
+.environment-section,
+.analytics-panel,
+.data-panel,
+.metrics-panel {
+  background-color: hsl(var(--background)) !important;
+}
+
+/* Complete dark theme removal */
+.dark,
+[class*="dark"],
+[data-theme="dark"],
+.dark\:*,
+[class*="dark"] * {
+  background-color: hsl(var(--background)) !important;
+  color: hsl(var(--foreground)) !important;
 }
 
 @theme inline {
