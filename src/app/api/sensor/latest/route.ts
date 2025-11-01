@@ -1,50 +1,23 @@
-// src/app/api/sensor/route.ts
-import { NextRequest, NextResponse } from "next/server";
-import {
-  getAggregatedSensorDataServer,
-  getSensorDataSinceServer,
-  saveSensorDataOptimized,
-} from "@/lib/sensor-service-server";
+// src/app/api/sensor/latest/route.ts
+import { NextResponse } from "next/server";
+import { getLatestSensorReadingServer } from "@/lib/sensor-service-server";
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
-    const { searchParams } = new URL(request.url);
-    const hours = searchParams.get("hours")
-      ? parseInt(searchParams.get("hours")!)
-      : 24;
-    const since = searchParams.get("since");
+    const latestReading = await getLatestSensorReadingServer();
 
-    let sensorData;
-
-    if (since) {
-      // Get data since specific timestamp
-      sensorData = await getSensorDataSinceServer(new Date(since));
-    } else {
-      // Get aggregated data based on time range
-      sensorData = await getAggregatedSensorDataServer(hours);
+    if (!latestReading) {
+      return NextResponse.json(
+        { error: "No sensor data found" },
+        { status: 404 }
+      );
     }
 
-    return NextResponse.json(sensorData);
+    return NextResponse.json(latestReading);
   } catch (error) {
-    console.error("Error in sensor API:", error);
+    console.error("Error fetching latest sensor reading:", error);
     return NextResponse.json(
-      { error: "Failed to fetch sensor data" },
-      { status: 500 }
-    );
-  }
-}
-
-export async function POST(request: NextRequest) {
-  try {
-    const data = await request.json();
-
-    const savedReading = await saveSensorDataOptimized(data);
-
-    return NextResponse.json(savedReading);
-  } catch (error) {
-    console.error("Error saving sensor data:", error);
-    return NextResponse.json(
-      { error: "Failed to save sensor data" },
+      { error: "Failed to fetch latest sensor reading" },
       { status: 500 }
     );
   }

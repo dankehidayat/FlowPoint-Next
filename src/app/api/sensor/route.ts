@@ -37,9 +37,7 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const data = await request.json();
-
     const savedReading = await saveSensorDataOptimized(data);
-
     return NextResponse.json(savedReading);
   } catch (error) {
     console.error("Error saving sensor data:", error);

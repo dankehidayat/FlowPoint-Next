@@ -1,5 +1,5 @@
 // src/lib/sensor-service.ts
-// Remove all Prisma imports and database calls
+// Client-side API calls for sensor data
 
 export interface SensorReading {
   id: number;
@@ -100,7 +100,9 @@ export async function getSensorDataSince(
 
 export async function getLatestSensorReading(): Promise<SensorReading | null> {
   try {
-    const response = await fetch("/api/sensor/latest");
+    const response = await fetch("/api/sensor/latest", {
+      cache: "no-store",
+    });
 
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
@@ -154,4 +156,12 @@ export async function saveSensorDataOptimized(
     console.error("❌ Error saving optimized sensor data:", error);
     return null;
   }
+}
+
+// Add the missing saveSensorData function to fix the import error
+export async function saveSensorData(
+  data: SensorDataInput
+): Promise<SensorReading | null> {
+  // Use the optimized version
+  return saveSensorDataOptimized(data);
 }
