@@ -1,7 +1,6 @@
 // src/components/charts/EnvironmentChart.tsx
 "use client";
 
-import { useState, useEffect } from "react";
 import {
   LineChart,
   Line,
@@ -13,183 +12,84 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { ChartData } from "@/types";
-import TimeRangeSelector from "../TimeRangeSelector";
+import ChartContainer from "../ui/charts/common/ChartContainer";
+import ChartTooltip from "../ui/charts/tooltips/ChartTooltip";
 
 interface EnvironmentChartProps {
-  initialData: ChartData[];
+  data: ChartData[];
+  timeRange: number;
+  isLoading?: boolean;
 }
 
-// Custom tooltip that matches the power charts style
-const CustomTooltip = ({ active, payload, label }: any) => {
-  if (active && payload && payload.length) {
+export default function EnvironmentChart({
+  data,
+  timeRange,
+  isLoading = false,
+}: EnvironmentChartProps) {
+  if (isLoading) {
     return (
-      <div className="bg-popover border border-border rounded-lg shadow-lg backdrop-blur-sm overflow-hidden">
-        <div className="bg-muted/50 px-3 py-2 border-b border-border">
-          <p className="text-sm text-foreground font-medium">{label}</p>
-        </div>
-        <div className="px-3 py-2 space-y-1">
-          {payload.map((entry: any, index: number) => (
-            <div
-              key={index}
-              className="flex items-center justify-between text-sm"
-            >
-              <div className="flex items-center gap-2">
-                <div
-                  className="w-2 h-2 rounded-full flex-shrink-0"
-                  style={{ backgroundColor: entry.color }}
-                />
-                <span className="text-foreground">
-                  {entry.name} {/* Removed the colon */}
-                </span>
-              </div>
-              <span className="font-semibold text-foreground ml-4">
-                {entry.value?.toFixed(1)}
-                {entry.unit || ""}
-              </span>
-            </div>
-          ))}
-        </div>
-      </div>
+      <ChartContainer
+        title="Environment"
+        timeRange={timeRange}
+        isLoading={true}
+        loadingMessage="Loading environment data..."
+      />
     );
   }
-  return null;
-};
 
-export default function EnvironmentChart({
-  initialData,
-}: EnvironmentChartProps) {
-  const [timeRange, setTimeRange] = useState<number>(24);
-  const [chartData, setChartData] = useState<ChartData[]>(initialData || []);
-  const [isLoading, setIsLoading] = useState(false);
+  if (!data || data.length === 0) {
+    return (
+      <ChartContainer
+        title="Environment"
+        timeRange={timeRange}
+        isEmpty={true}
+        emptyMessage="No environment data available"
+      />
+    );
+  }
 
-  useEffect(() => {
-    const fetchDataForTimeRange = async () => {
-      if (timeRange <= 24) {
-        const cutoffTime = new Date(Date.now() - timeRange * 60 * 60 * 1000);
-        const filteredData = (initialData || []).filter(
-          (item) => new Date(item.timestamp) >= cutoffTime
-        );
-        setChartData(filteredData);
-      } else {
-        setIsLoading(true);
-        try {
-          const response = await fetch(
-            `/api/sensor?hours=${timeRange}&aggregated=true`
-          );
-          const result = await response.json();
-
-          if (result.historical) {
-            const transformedData = result.historical.map((item: any) => ({
-              time: new Date(item.timestamp).toLocaleTimeString([], {
-                hour: "2-digit",
-                minute: "2-digit",
-                ...(timeRange > 24 && { month: "short", day: "numeric" }),
-              }),
-              timestamp: item.timestamp,
-              temperature: item.temperature_avg || item.temperature,
-              humidity: item.humidity_avg || item.humidity,
-              power: item.power_avg || item.power,
-              apparentPower: item.apparentPower_avg || item.apparentPower,
-              reactivePower: item.reactivePower_avg || item.reactivePower,
-              voltage: item.voltage_avg || item.voltage,
-              current: item.current_avg || item.current,
-              energy: item.energy_last || item.energy,
-              frequency: item.frequency_avg || item.frequency,
-              powerFactor: item.powerFactor_avg || item.powerFactor,
-            }));
-            setChartData(transformedData);
-          }
-        } catch (error) {
-          console.error("Failed to fetch environment data:", error);
-        } finally {
-          setIsLoading(false);
-        }
-      }
-    };
-
-    fetchDataForTimeRange();
-  }, [timeRange, initialData]);
-
-  // Calculate domains with larger delta to separate the lines
-  const calculateDomains = () => {
-    if (chartData.length === 0) {
-      return { tempDomain: [0, 40], humidityDomain: [0, 100] };
-    }
-
-    const temperatures = chartData
-      .map((d) => d.temperature)
-      .filter((t) => !isNaN(t));
-    const humidities = chartData
-      .map((d) => d.humidity)
-      .filter((h) => !isNaN(h));
-
-    const tempMin = Math.min(...temperatures);
-    const tempMax = Math.max(...temperatures);
-    const humidityMin = Math.min(...humidities);
-    const humidityMax = Math.max(...humidities);
-
-    // Larger delta for temperature (8-10 degrees) to create more separation
-    const tempDelta = Math.max(8, (tempMax - tempMin) * 0.5);
-    const humidityDelta = Math.max(15, (humidityMax - humidityMin) * 0.4);
-
-    return {
-      tempDomain: [
-        Math.max(0, Math.floor(tempMin - tempDelta)),
-        Math.ceil(tempMax + tempDelta),
-      ],
-      humidityDomain: [
-        Math.max(0, Math.floor(humidityMin - humidityDelta)),
-        Math.min(100, Math.ceil(humidityMax + humidityDelta)),
-      ],
-    };
-  };
-
-  const { tempDomain, humidityDomain } = calculateDomains();
+  const chartData = data.map((item) => ({
+    ...item,
+    temperature: Number(item.temperature) || 0,
+    humidity: Number(item.humidity) || 0,
+  }));
 
   return (
-    <div className="space-y-4">
-      <div className="flex justify-between items-center">
-        <TimeRangeSelector onTimeRangeChange={setTimeRange} defaultRange={24} />
-      </div>
-
-      {isLoading ? (
-        <div className="h-[200px] flex items-center justify-center">
-          <div className="text-muted-foreground">
-            Loading environment data...
-          </div>
-        </div>
-      ) : !chartData || chartData.length === 0 ? (
-        <div className="h-[200px] flex items-center justify-center">
-          <div className="text-muted-foreground">
-            No environment data available
-          </div>
-        </div>
-      ) : (
-        <ResponsiveContainer width="100%" height={200}>
-          <LineChart data={chartData}>
-            <CartesianGrid strokeDasharray="3 3" className="stroke-border" />
-            <XAxis
-              dataKey="time"
-              tick={{ fontSize: 12 }}
-              className="fill-muted-foreground"
-              interval="preserveStartEnd"
-            />
+    <ChartContainer title="Environment" timeRange={timeRange}>
+      <div className="h-[300px] w-full">
+        <ResponsiveContainer width="100%" height="100%">
+          <LineChart
+            data={chartData}
+            margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+          >
+            <CartesianGrid strokeDasharray="3 3" className="opacity-30" />
+            <XAxis dataKey="time" tick={{ fontSize: 12 }} tickMargin={10} />
             <YAxis
               yAxisId="left"
               tick={{ fontSize: 12 }}
-              className="fill-muted-foreground"
-              domain={tempDomain}
-              tickFormatter={(value) => `${value}°C`}
+              tickMargin={10}
+              label={{
+                value: "Temperature (°C)",
+                angle: -90,
+                position: "insideLeft",
+                offset: -10,
+                style: { fontSize: 12 },
+              }}
             />
             <YAxis
               yAxisId="right"
               orientation="right"
               tick={{ fontSize: 12 }}
-              className="fill-muted-foreground"
-              domain={humidityDomain}
-              tickFormatter={(value) => `${value}%`}
+              tickMargin={10}
+              label={{
+                value: "Humidity (%)",
+                angle: -90,
+                position: "insideRight",
+                offset: -10,
+                style: { fontSize: 12 },
+              }}
             />
-            <Tooltip content={<CustomTooltip />} />
+            <Tooltip content={<ChartTooltip />} />
             <Legend />
             <Line
               yAxisId="left"
@@ -200,7 +100,8 @@ export default function EnvironmentChart({
               dot={false}
               activeDot={{ r: 4 }}
               name="Temperature"
-              unit="°C"
+              isAnimationActive={true}
+              animationDuration={300}
             />
             <Line
               yAxisId="right"
@@ -211,11 +112,12 @@ export default function EnvironmentChart({
               dot={false}
               activeDot={{ r: 4 }}
               name="Humidity"
-              unit="%"
+              isAnimationActive={true}
+              animationDuration={300}
             />
           </LineChart>
         </ResponsiveContainer>
-      )}
-    </div>
+      </div>
+    </ChartContainer>
   );
 }

@@ -1,8 +1,8 @@
-// src/components/TimeRangeSelector.tsx
+// src/components/ui/time-range/TimeRangeSelector.tsx
 "use client";
 
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 
 export interface TimeRangeOption {
   label: string;
@@ -16,6 +16,7 @@ interface TimeRangeSelectorProps {
 }
 
 const timeRanges: TimeRangeOption[] = [
+  { label: "1H", value: 1 },
   { label: "6H", value: 6 },
   { label: "12H", value: 12 },
   { label: "1D", value: 24 },
@@ -24,7 +25,7 @@ const timeRanges: TimeRangeOption[] = [
 
 export default function TimeRangeSelector({
   onTimeRangeChange,
-  defaultRange = 24,
+  defaultRange = 1, // Changed default to 1H
   className = "",
 }: TimeRangeSelectorProps) {
   const [selectedRange, setSelectedRange] = useState<number>(defaultRange);
@@ -35,12 +36,9 @@ export default function TimeRangeSelector({
   };
 
   return (
-    <div className={`flex items-center space-x-3 ${className}`}>
-      <span className="text-sm font-medium text-muted-foreground whitespace-nowrap">
-        Time Range:
-      </span>
-      <div className="flex bg-muted/50 rounded-lg p-1 border">
-        {timeRanges.map((range, index) => (
+    <div className={`flex items-center space-x-1 ${className}`}>
+      <div className="flex bg-gray-100 rounded-lg p-1 border border-gray-200">
+        {timeRanges.map((range) => (
           <button
             key={range.value}
             onClick={() => handleRangeChange(range.value)}
@@ -48,15 +46,15 @@ export default function TimeRangeSelector({
               relative px-3 py-1.5 text-sm font-medium rounded-md transition-all duration-200
               ${
                 selectedRange === range.value
-                  ? "text-foreground"
-                  : "text-muted-foreground hover:text-foreground"
+                  ? "text-gray-900"
+                  : "text-gray-500 hover:text-gray-700"
               }
             `}
           >
             {selectedRange === range.value && (
               <motion.div
                 layoutId="activeBackground"
-                className="absolute inset-0 bg-background shadow-sm border rounded-md"
+                className="absolute inset-0 bg-white shadow-sm border border-gray-200 rounded-md"
                 initial={false}
                 transition={{
                   type: "spring",

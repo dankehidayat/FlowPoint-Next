@@ -1,19 +1,10 @@
 /* globals.css */
+
+@plugin "tailwindcss-animate";
 @import "tailwindcss";
 
-/* Font Import Options - Choose ONE of these: */
-
-/* Option 1: Inter + JetBrains Mono (Modern, clean) */
-/* @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"); */
-
-/* Option 2: Manrope (Very popular for dashboards) */
-/* @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&display=swap'); */
-
-/* Option 3: Plus Jakarta Sans (Modern, geometric) */
+/* Font Import */
 @import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap");
-
-/* Option 4: Outfit (Clean, modern, great for displays) */
-/* @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap'); */
 
 :root {
   --background: 0 0% 100%;
@@ -22,7 +13,7 @@
   --card-foreground: 222.2 84% 4.9%;
   --popover: 0 0% 100%;
   --popover-foreground: 222.2 84% 4.9%;
-  --primary: 221.2 83.2% 53.3%;
+  --primary: 222.2 47.4% 11.2%;
   --primary-foreground: 210 40% 98%;
   --secondary: 210 40% 96%;
   --secondary-foreground: 222.2 47.4% 11.2%;
@@ -34,32 +25,13 @@
   --destructive-foreground: 210 40% 98%;
   --border: 214.3 31.8% 91.4%;
   --input: 214.3 31.8% 91.4%;
-  --ring: 221.2 83.2% 53.3%;
-  --radius: 0.75rem;
-  --font-sans: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
-  --font-mono: "Plus Jakarta Sans", monospace;
-}
-
-.dark {
-  --background: 222.2 84% 4.9%;
-  --foreground: 210 40% 98%;
-  --card: 222.2 84% 4.9%;
-  --card-foreground: 210 40% 98%;
-  --popover: 222.2 84% 4.9%;
-  --popover-foreground: 210 40% 98%;
-  --primary: 217.2 91.2% 59.8%;
-  --primary-foreground: 222.2 84% 4.9%;
-  --secondary: 217.2 32.6% 17.5%;
-  --secondary-foreground: 210 40% 98%;
-  --muted: 217.2 32.6% 17.5%;
-  --muted-foreground: 215 20.2% 65.1%;
-  --accent: 217.2 32.6% 17.5%;
-  --accent-foreground: 210 40% 98%;
-  --destructive: 0 62.8% 30.6%;
-  --destructive-foreground: 210 40% 98%;
-  --border: 217.2 32.6% 17.5%;
-  --input: 217.2 32.6% 17.5%;
-  --ring: 224.3 76.3% 94.1%;
+  --ring: 222.2 84% 4.9%;
+  --radius: 0.5rem;
+  --chart-1: 12 76% 61%;
+  --chart-2: 173 58% 39%;
+  --chart-3: 197 37% 24%;
+  --chart-4: 43 74% 66%;
+  --chart-5: 27 87% 67%;
 }
 
 * {
@@ -70,7 +42,7 @@
 body {
   background-color: hsl(var(--background));
   color: hsl(var(--foreground));
-  font-family: var(--font-sans);
+  font-family: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
   font-feature-settings: "rlig" 1, "calt" 1;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -80,12 +52,7 @@ body {
   line-height: 1.5;
 }
 
-/* Force all elements to use proper colors */
-* {
-  color: hsl(var(--foreground));
-}
-
-/* Ensure all text elements use the foreground color */
+/* Ensure all text elements use proper colors */
 h1,
 h2,
 h3,
@@ -102,68 +69,35 @@ label,
 input,
 textarea,
 select {
-  color: hsl(var(--foreground)) !important;
+  color: hsl(var(--foreground));
 }
 
-/* Ensure card content uses proper colors */
-.card-content,
+/* Card styling */
+.card,
 .stat-card,
 .analytics-card,
 .dashboard-card {
-  color: hsl(var(--foreground)) !important;
-}
-
-/* Thermal comfort and humidity level specific styling */
-.thermal-comfort-text,
-.humidity-level-text,
-.comfort-indicator {
-  color: hsl(var(--foreground)) !important;
-}
-
-/* Summary dashboard specific text colors */
-.summary-text,
-.comfort-status-text,
-.recommendation-text {
-  color: hsl(var(--foreground)) !important;
-}
-
-/* Energy charts specific text colors */
-.energy-stat-value,
-.energy-stat-label,
-.energy-chart-title {
-  color: hsl(var(--foreground)) !important;
+  background-color: hsl(var(--card));
+  color: hsl(var(--card-foreground));
+  border: 1px solid hsl(var(--border));
 }
 
 /* Muted foreground colors */
 .text-muted-foreground {
-  color: hsl(var(--muted-foreground)) !important;
+  color: hsl(var(--muted-foreground));
 }
 
 .text-foreground\/80 {
-  color: hsl(var(--muted-foreground)) !important;
+  color: hsl(var(--muted-foreground));
 }
 
-/* Smart recommendation icons should maintain their colors */
-.smart-recommendation-icon {
-  color: inherit !important;
-}
-
-/* Ensure icons maintain their colors in dark mode */
-.dark .smart-recommendation-icon {
-  color: inherit !important;
-}
-
-/* Consistent icon background styling matching smart recommendations */
+/* Consistent icon background styling */
 .icon-bg-green {
   background-color: rgb(220 252 231 / 0.8);
   border: 1px solid rgb(187 247 208 / 0.5);
   border-radius: 0.75rem;
   padding: 0.5rem;
   backdrop-filter: blur(8px);
-}
-.dark .icon-bg-green {
-  background-color: rgb(20 83 45 / 0.5);
-  border: 1px solid rgb(34 197 94 / 0.3);
 }
 
 .icon-bg-yellow {
@@ -173,10 +107,6 @@ select {
   padding: 0.5rem;
   backdrop-filter: blur(8px);
 }
-.dark .icon-bg-yellow {
-  background-color: rgb(113 63 18 / 0.5);
-  border: 1px solid rgb(234 179 8 / 0.3);
-}
 
 .icon-bg-indigo {
   background-color: rgb(224 231 255 / 0.8);
@@ -184,10 +114,6 @@ select {
   border-radius: 0.75rem;
   padding: 0.5rem;
   backdrop-filter: blur(8px);
-}
-.dark .icon-bg-indigo {
-  background-color: rgb(49 46 129 / 0.5);
-  border: 1px solid rgb(129 140 248 / 0.3);
 }
 
 .icon-bg-cyan {
@@ -197,10 +123,6 @@ select {
   padding: 0.5rem;
   backdrop-filter: blur(8px);
 }
-.dark .icon-bg-cyan {
-  background-color: rgb(21 94 117 / 0.5);
-  border: 1px solid rgb(34 211 238 / 0.3);
-}
 
 .icon-bg-blue {
   background-color: rgb(219 234 254 / 0.8);
@@ -208,10 +130,6 @@ select {
   border-radius: 0.75rem;
   padding: 0.5rem;
   backdrop-filter: blur(8px);
-}
-.dark .icon-bg-blue {
-  background-color: rgb(30 58 138 / 0.5);
-  border: 1px solid rgb(59 130 246 / 0.3);
 }
 
 .icon-bg-purple {
@@ -221,10 +139,6 @@ select {
   padding: 0.5rem;
   backdrop-filter: blur(8px);
 }
-.dark .icon-bg-purple {
-  background-color: rgb(76 29 149 / 0.5);
-  border: 1px solid rgb(168 85 247 / 0.3);
-}
 
 .icon-bg-orange {
   background-color: rgb(255 237 213 / 0.8);
@@ -232,10 +146,6 @@ select {
   border-radius: 0.75rem;
   padding: 0.5rem;
   backdrop-filter: blur(8px);
-}
-.dark .icon-bg-orange {
-  background-color: rgb(124 45 18 / 0.5);
-  border: 1px solid rgb(249 115 22 / 0.3);
 }
 
 .icon-bg-teal {
@@ -245,10 +155,6 @@ select {
   padding: 0.5rem;
   backdrop-filter: blur(8px);
 }
-.dark .icon-bg-teal {
-  background-color: rgb(19 78 74 / 0.5);
-  border: 1px solid rgb(20 184 166 / 0.3);
-}
 
 .icon-bg-red {
   background-color: rgb(254 226 226 / 0.8);
@@ -257,13 +163,9 @@ select {
   padding: 0.5rem;
   backdrop-filter: blur(8px);
 }
-.dark .icon-bg-red {
-  background-color: rgb(127 29 29 / 0.5);
-  border: 1px solid rgb(239 68 68 / 0.3);
-}
 
-/* Consistent icon container base styling */
-.icon-container-base {
+/* Base icon container */
+.icon-container {
   padding: 0.5rem;
   border-radius: 0.75rem;
   backdrop-filter: blur(8px);
@@ -272,21 +174,125 @@ select {
   justify-content: center;
 }
 
-/* Tablet styles (768px and up) */
+/* Circular background for metrics icons */
+.metric-icon-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  background: hsl(var(--muted));
+}
+
+/* Responsive icon sizes */
+@media (max-width: 640px) {
+  .icon-container {
+    padding: 0.375rem;
+  }
+
+  .smart-recommendation-icon {
+    width: 0.875rem !important;
+    height: 0.875rem !important;
+  }
+
+  .icon-lg {
+    width: 1.125rem !important;
+    height: 1.125rem !important;
+  }
+
+  .icon-xl {
+    width: 1.375rem !important;
+    height: 1.375rem !important;
+  }
+}
+
+/* Tablet styles */
 @media (min-width: 768px) {
   body {
     font-size: 15px;
   }
 }
 
-/* Desktop styles (1024px and up) */
+/* Desktop styles */
 @media (min-width: 1024px) {
   body {
     font-size: 16px;
   }
 }
 
-/* Custom scrollbar - hide on mobile, show on desktop */
+/* Mobile layout improvements */
+@media (max-width: 768px) {
+  .environment-analytics-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1rem !important;
+  }
+
+  .energy-analytics-grid-mobile {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 0.75rem !important;
+  }
+
+  .stat-card-mobile,
+  .energy-card-mobile {
+    padding: 1rem !important;
+    min-height: auto !important;
+  }
+
+  /* Analytics header mobile optimization */
+  .analytics-header {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 1rem !important;
+  }
+
+  .time-range-selector-mobile {
+    width: 100% !important;
+    justify-content: flex-start !important;
+  }
+}
+
+/* Small mobile devices */
+@media (max-width: 640px) {
+  .mobile-text-sm {
+    font-size: 0.875rem;
+  }
+
+  .mobile-text-xs {
+    font-size: 0.75rem;
+  }
+
+  .mobile-p-3 {
+    padding: 0.75rem;
+  }
+
+  .mobile-p-4 {
+    padding: 1rem;
+  }
+
+  /* Time range selector mobile optimization */
+  .time-range-buttons {
+    flex-wrap: wrap !important;
+    gap: 0.25rem !important;
+  }
+
+  .time-range-button {
+    flex: 1 !important;
+    min-width: 60px !important;
+    text-align: center !important;
+    font-size: 0.75rem !important;
+    padding: 0.5rem 0.25rem !important;
+  }
+}
+
+/* Large desktop optimization */
+@media (min-width: 1536px) {
+  .analytics-header {
+    gap: 2rem !important;
+  }
+}
+
+/* Custom scrollbar */
 @media (min-width: 768px) {
   ::-webkit-scrollbar {
     width: 8px;
@@ -307,7 +313,7 @@ select {
   }
 }
 
-/* Enhanced Recharts Tooltip Styling - Consistent across all charts */
+/* Enhanced Recharts Tooltip Styling */
 .recharts-default-tooltip {
   background-color: hsl(var(--popover)) !important;
   border: 1px solid hsl(var(--border)) !important;
@@ -348,7 +354,7 @@ select {
   gap: 12px;
 }
 
-/* Color dots for all tooltip items */
+/* Color dots for tooltip items */
 .recharts-tooltip-item::before {
   content: "" !important;
   width: 12px !important;
@@ -372,41 +378,6 @@ select {
   background-color: #10b981 !important;
 }
 
-/* Apparent Power - amber */
-.recharts-tooltip-item:nth-child(4)::before {
-  background-color: #f59e0b !important;
-}
-
-/* Reactive Power - violet */
-.recharts-tooltip-item:nth-child(5)::before {
-  background-color: #8b5cf6 !important;
-}
-
-/* Voltage - cyan */
-.recharts-tooltip-item:nth-child(6)::before {
-  background-color: #06b6d4 !important;
-}
-
-/* Current - fuchsia */
-.recharts-tooltip-item:nth-child(7)::before {
-  background-color: #d946ef !important;
-}
-
-/* Energy - lime */
-.recharts-tooltip-item:nth-child(8)::before {
-  background-color: #84cc16 !important;
-}
-
-/* Frequency - orange */
-.recharts-tooltip-item:nth-child(9)::before {
-  background-color: #f97316 !important;
-}
-
-/* Power Factor - indigo */
-.recharts-tooltip-item:nth-child(10)::before {
-  background-color: #6366f1 !important;
-}
-
 .recharts-tooltip-item-name {
   font-weight: 500 !important;
   margin-left: 8px !important;
@@ -422,79 +393,19 @@ select {
   display: none !important;
 }
 
-/* Mobile tooltip adjustments */
-@media (max-width: 640px) {
-  .recharts-default-tooltip {
-    max-width: 240px;
-    margin: 4px !important;
-  }
-
-  .recharts-tooltip-label {
-    font-size: 0.8rem !important;
-    padding: 10px 12px !important;
-  }
-
-  .recharts-tooltip-item-list {
-    padding: 10px 12px !important;
-  }
-
-  .recharts-tooltip-item {
-    font-size: 0.75rem !important;
-    gap: 8px;
-  }
-
-  .recharts-tooltip-item::before {
-    width: 10px !important;
-    height: 10px !important;
-  }
-}
-
 /* Chart container improvements */
 .recharts-wrapper {
-  font-family: var(--font-sans) !important;
+  font-family: "Plus Jakarta Sans", system-ui, sans-serif !important;
 }
 
 .recharts-cartesian-axis-tick-value {
-  font-family: var(--font-sans) !important;
+  font-family: "Plus Jakarta Sans", system-ui, sans-serif !important;
   font-weight: 500 !important;
   fill: hsl(var(--foreground)) !important;
 }
 
-/* Mobile chart text sizing */
-@media (max-width: 640px) {
-  .recharts-cartesian-axis-tick-value {
-    font-size: 0.7rem !important;
-  }
-
-  .recharts-legend-item-text {
-    font-size: 0.7rem !important;
-  }
-}
-
-/* Tablet chart text sizing */
-@media (min-width: 641px) and (max-width: 1023px) {
-  .recharts-cartesian-axis-tick-value {
-    font-size: 0.7rem !important;
-  }
-
-  .recharts-legend-item-text {
-    font-size: 0.75rem !important;
-  }
-}
-
-/* Desktop chart text sizing */
-@media (min-width: 1024px) {
-  .recharts-cartesian-axis-tick-value {
-    font-size: 0.75rem !important;
-  }
-
-  .recharts-legend-item-text {
-    font-size: 0.75rem !important;
-  }
-}
-
 .recharts-legend-item-text {
-  font-family: var(--font-sans) !important;
+  font-family: "Plus Jakarta Sans", system-ui, sans-serif !important;
   font-weight: 500 !important;
   fill: hsl(var(--foreground)) !important;
 }
@@ -503,447 +414,7 @@ select {
   fill: hsl(var(--foreground)) !important;
 }
 
-/* Smooth transitions for theme switching */
-* {
-  transition: background-color 0.3s ease, border-color 0.3s ease,
-    color 0.3s ease, fill 0.3s ease, stroke 0.3s ease;
-}
-
-/* Focus states for accessibility */
-button:focus-visible,
-a:focus-visible {
-  outline: 2px solid hsl(var(--ring));
-  outline-offset: 2px;
-}
-
-/* Code/monospace elements */
-code,
-kbd,
-pre,
-samp {
-  font-family: var(--font-mono) !important;
-}
-
-/* Mobile-specific utility classes */
-@media (max-width: 640px) {
-  .mobile-text-sm {
-    font-size: 0.875rem;
-  }
-
-  .mobile-text-xs {
-    font-size: 0.75rem;
-  }
-
-  .mobile-p-3 {
-    padding: 0.75rem;
-  }
-
-  .mobile-p-4 {
-    padding: 1rem;
-  }
-}
-
-/* Mobile layout improvements for analytics cards */
-@media (max-width: 768px) {
-  .environment-analytics-grid {
-    grid-template-columns: 1fr !important;
-    gap: 1rem !important;
-  }
-
-  .stat-card-mobile {
-    padding: 1rem !important;
-  }
-
-  .stat-card-mobile .current-value {
-    font-size: 1.5rem !important;
-    margin-bottom: 0.75rem !important;
-  }
-
-  /* Force 2-column layout for energy analytics */
-  .energy-analytics-grid-mobile {
-    grid-template-columns: 1fr 1fr !important;
-    gap: 0.75rem !important;
-  }
-
-  .energy-card-mobile {
-    min-height: auto !important;
-    padding: 1rem !important;
-  }
-
-  .energy-current-value {
-    font-size: 1.75rem !important;
-    line-height: 1.2 !important;
-  }
-
-  .energy-stats-grid {
-    grid-template-columns: 1fr 1fr !important;
-    gap: 0.5rem !important;
-    margin-top: 0.75rem !important;
-  }
-
-  .energy-stat-item {
-    text-align: center !important;
-    padding: 0.25rem !important;
-  }
-
-  .energy-stat-value {
-    font-size: 0.875rem !important;
-    font-weight: 600 !important;
-  }
-
-  .energy-stat-label {
-    font-size: 0.7rem !important;
-    margin-top: 0.125rem !important;
-  }
-}
-
-/* Extra small mobile devices */
-@media (max-width: 380px) {
-  .energy-analytics-grid-mobile {
-    grid-template-columns: 1fr !important;
-    gap: 0.5rem !important;
-  }
-
-  .energy-card-mobile {
-    padding: 0.75rem !important;
-  }
-
-  .energy-current-value {
-    font-size: 1.5rem !important;
-  }
-}
-
-/* Touch device improvements */
-@media (hover: none) and (pointer: coarse) {
-  button,
-  .time-range-selector button {
-    min-height: 44px;
-    min-width: 44px;
-  }
-
-  .recharts-tooltip-item {
-    pointer-events: none;
-  }
-
-  /* Better touch targets for mobile */
-  .mobile-touch-target {
-    min-height: 44px;
-    min-width: 44px;
-  }
-
-  .chart-container-mobile {
-    padding: 8px 4px !important;
-  }
-}
-
-/* High-DPI screen optimizations */
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-  body {
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
-
-  /* Crisper charts on high-DPI displays */
-  .recharts-curve {
-    shape-rendering: geometricPrecision;
-  }
-
-  .recharts-line {
-    shape-rendering: geometricPrecision;
-  }
-}
-
-/* Print styles */
-@media print {
-  .recharts-wrapper {
-    break-inside: avoid;
-  }
-
-  .recharts-default-tooltip {
-    display: none !important;
-  }
-
-  /* Ensure charts print properly */
-  .recharts-surface {
-    print-color-adjust: exact;
-  }
-}
-
-/* Reduced motion support */
-@media (prefers-reduced-motion: reduce) {
-  * {
-    transition-duration: 0.01ms !important;
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-  }
-
-  /* Disable chart animations */
-  .recharts-line {
-    animation: none !important;
-  }
-
-  .recharts-area {
-    animation: none !important;
-  }
-
-  .recharts-bar {
-    animation: none !important;
-  }
-}
-
-/* Dark mode specific chart improvements */
-.dark .recharts-cartesian-grid-horizontal line,
-.dark .recharts-cartesian-grid-vertical line {
-  stroke: hsl(var(--border) / 0.3);
-}
-
-.dark .recharts-reference-line line {
-  stroke: hsl(var(--muted-foreground) / 0.5);
-}
-
-/* Environment chart specific improvements */
-.environment-chart-container {
-  position: relative;
-}
-
-.environment-chart-y-axis {
-  font-weight: 600;
-}
-
-/* Energy chart specific improvements */
-.energy-chart-container {
-  position: relative;
-}
-
-.energy-chart-y-axis {
-  font-weight: 600;
-}
-
-/* Loading states */
-.chart-loading-skeleton {
-  background: linear-gradient(
-    90deg,
-    hsl(var(--muted) / 0.6) 25%,
-    hsl(var(--muted) / 0.8) 50%,
-    hsl(var(--muted) / 0.6) 75%
-  );
-  background-size: 200% 100%;
-  animation: loading 1.5s infinite;
-}
-
-@keyframes loading {
-  0% {
-    background-position: 200% 0;
-  }
-  100% {
-    background-position: -200% 0;
-  }
-}
-
-/* Custom scrollbar for chart containers */
-.chart-container::-webkit-scrollbar {
-  height: 6px;
-}
-
-.chart-container::-webkit-scrollbar-track {
-  background: hsl(var(--muted));
-  border-radius: 3px;
-}
-
-.chart-container::-webkit-scrollbar-thumb {
-  background: hsl(var(--muted-foreground) / 0.3);
-  border-radius: 3px;
-}
-
-.chart-container::-webkit-scrollbar-thumb:hover {
-  background: hsl(var(--muted-foreground) / 0.5);
-}
-
-/* Legend improvements */
-.recharts-legend-wrapper {
-  padding-top: 8px !important;
-}
-
-.recharts-default-legend {
-  display: flex;
-  justify-content: center;
-  gap: 16px;
-  flex-wrap: wrap;
-}
-
-/* Hover effects for better interactivity */
-.recharts-line:hover {
-  filter: brightness(1.1);
-}
-
-.recharts-active-dot {
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
-}
-
-/* Mobile-first responsive design for chart containers */
-@media (max-width: 640px) {
-  .chart-container-mobile {
-    margin: 0 -0.5rem;
-    padding: 0.5rem;
-  }
-
-  .recharts-legend-wrapper {
-    padding-top: 4px !important;
-  }
-
-  .recharts-default-legend {
-    gap: 12px;
-  }
-}
-
-/* Environment chart specific styling for better temperature visibility */
-.environment-temperature-line {
-  stroke-width: 2.5;
-}
-
-.environment-humidity-line {
-  stroke-width: 2.5;
-}
-
-/* Energy chart specific styling */
-.energy-power-line {
-  stroke-width: 2.5;
-}
-
-.energy-voltage-line {
-  stroke-width: 2.5;
-}
-
-.energy-current-line {
-  stroke-width: 2.5;
-}
-
-/* Improved Y-axis spacing for environment chart */
-.environment-y-axis-left {
-  font-weight: 600;
-}
-
-.environment-y-axis-right {
-  font-weight: 600;
-}
-
-/* Improved Y-axis spacing for energy chart */
-.energy-y-axis-left {
-  font-weight: 600;
-}
-
-.energy-y-axis-right {
-  font-weight: 600;
-}
-
-/* Better mobile experience for environment analytics */
-@media (max-width: 768px) {
-  .environment-stats-container {
-    grid-template-columns: 1fr 1fr;
-    gap: 0.75rem;
-  }
-
-  .environment-stat-card {
-    padding: 1rem;
-    min-height: 120px;
-  }
-
-  .environment-stat-current {
-    font-size: 1.75rem;
-    font-weight: 700;
-    margin-bottom: 0.5rem;
-  }
-
-  .environment-stat-details {
-    grid-template-columns: 1fr 1fr;
-    gap: 0.5rem;
-  }
-
-  .environment-stat-item {
-    text-align: center;
-  }
-
-  .environment-stat-value {
-    font-size: 0.875rem;
-    font-weight: 600;
-  }
-
-  .environment-stat-label {
-    font-size: 0.7rem;
-    color: hsl(var(--muted-foreground));
-  }
-}
-
-/* Better mobile experience for energy analytics */
-@media (max-width: 768px) {
-  .energy-stats-container {
-    grid-template-columns: 1fr 1fr;
-    gap: 0.75rem;
-  }
-
-  .energy-stat-card {
-    padding: 1rem;
-    min-height: 120px;
-  }
-
-  .energy-stat-current {
-    font-size: 1.75rem;
-    font-weight: 700;
-    margin-bottom: 0.5rem;
-  }
-
-  .energy-stat-details {
-    grid-template-columns: 1fr 1fr;
-    gap: 0.5rem;
-  }
-
-  .energy-stat-item {
-    text-align: center;
-  }
-
-  .energy-stat-value {
-    font-size: 0.875rem;
-    font-weight: 600;
-  }
-
-  .energy-stat-label {
-    font-size: 0.7rem;
-    color: hsl(var(--muted-foreground));
-  }
-}
-
-/* Extra small screen adjustments */
-@media (max-width: 380px) {
-  .environment-stats-container {
-    grid-template-columns: 1fr;
-    gap: 0.5rem;
-  }
-
-  .environment-stat-card {
-    padding: 0.75rem;
-    min-height: 110px;
-  }
-
-  .environment-stat-current {
-    font-size: 1.5rem;
-  }
-
-  .energy-stats-container {
-    grid-template-columns: 1fr;
-    gap: 0.5rem;
-  }
-
-  .energy-stat-card {
-    padding: 0.75rem;
-    min-height: 110px;
-  }
-
-  .energy-stat-current {
-    font-size: 1.5rem;
-  }
-}
-
-/* Trend animation for temperature and humidity */
+/* Trend animation */
 .trend-animation {
   animation: trendPulse 2s ease-in-out infinite;
 }
@@ -960,37 +431,17 @@ samp {
   }
 }
 
-/* Smart recommendation icon styling */
-.smart-recommendation-icon {
-  width: 1rem !important;
-  height: 1rem !important;
+/* Smooth transitions */
+* {
+  transition: background-color 0.3s ease, border-color 0.3s ease,
+    color 0.3s ease, fill 0.3s ease, stroke 0.3s ease;
 }
 
-/* Ensure consistent icon sizes */
-.icon-lg {
-  width: 1.25rem !important;
-  height: 1.25rem !important;
-}
-
-.icon-xl {
-  width: 1.5rem !important;
-  height: 1.5rem !important;
-}
-
-/* Circular background for environment and energy metrics icons */
-.metric-icon-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 2.5rem;
-  height: 2.5rem;
-  border-radius: 50%;
-  background: hsl(var(--muted));
-}
-
-/* Dark mode adjustments for metric icons */
-.dark .metric-icon-container {
-  background: hsl(var(--muted) / 0.5);
+/* Focus states for accessibility */
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid hsl(var(--ring));
+  outline-offset: 2px;
 }
 
 /* Additional utility classes for consistent icon backgrounds */
@@ -1001,10 +452,6 @@ samp {
   padding: 0.5rem;
   backdrop-filter: blur(8px);
 }
-.dark .icon-bg-gray {
-  background-color: rgb(55 65 81 / 0.5);
-  border: 1px solid rgb(107 114 128 / 0.3);
-}
 
 .icon-bg-pink {
   background-color: rgb(253 242 248 / 0.8);
@@ -1012,10 +459,6 @@ samp {
   border-radius: 0.75rem;
   padding: 0.5rem;
   backdrop-filter: blur(8px);
-}
-.dark .icon-bg-pink {
-  background-color: rgb(131 24 67 / 0.5);
-  border: 1px solid rgb(236 72 153 / 0.3);
 }
 
 .icon-bg-rose {
@@ -1025,10 +468,6 @@ samp {
   padding: 0.5rem;
   backdrop-filter: blur(8px);
 }
-.dark .icon-bg-rose {
-  background-color: rgb(159 18 57 / 0.5);
-  border: 1px solid rgb(244 63 94 / 0.3);
-}
 
 .icon-bg-emerald {
   background-color: rgb(209 250 229 / 0.8);
@@ -1036,10 +475,6 @@ samp {
   border-radius: 0.75rem;
   padding: 0.5rem;
   backdrop-filter: blur(8px);
-}
-.dark .icon-bg-emerald {
-  background-color: rgb(6 78 59 / 0.5);
-  border: 1px solid rgb(16 185 129 / 0.3);
 }
 
 .icon-bg-violet {
@@ -1049,10 +484,6 @@ samp {
   padding: 0.5rem;
   backdrop-filter: blur(8px);
 }
-.dark .icon-bg-violet {
-  background-color: rgb(76 29 149 / 0.5);
-  border: 1px solid rgb(139 92 246 / 0.3);
-}
 
 .icon-bg-fuchsia {
   background-color: rgb(250 232 255 / 0.8);
@@ -1060,10 +491,6 @@ samp {
   border-radius: 0.75rem;
   padding: 0.5rem;
   backdrop-filter: blur(8px);
-}
-.dark .icon-bg-fuchsia {
-  background-color: rgb(134 25 143 / 0.5);
-  border: 1px solid rgb(217 70 239 / 0.3);
 }
 
 .icon-bg-sky {
@@ -1073,10 +500,6 @@ samp {
   padding: 0.5rem;
   backdrop-filter: blur(8px);
 }
-.dark .icon-bg-sky {
-  background-color: rgb(12 74 110 / 0.5);
-  border: 1px solid rgb(14 165 233 / 0.3);
-}
 
 .icon-bg-lime {
   background-color: rgb(236 252 203 / 0.8);
@@ -1085,39 +508,42 @@ samp {
   padding: 0.5rem;
   backdrop-filter: blur(8px);
 }
-.dark .icon-bg-lime {
-  background-color: rgb(63 98 18 / 0.5);
-  border: 1px solid rgb(132 204 22 / 0.3);
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
 }
 
-/* Base icon container that can be combined with color classes */
-.icon-container {
-  padding: 0.5rem;
-  border-radius: 0.75rem;
-  backdrop-filter: blur(8px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* Responsive icon sizes */
-@media (max-width: 640px) {
-  .icon-container {
-    padding: 0.375rem;
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
   }
-
-  .smart-recommendation-icon {
-    width: 0.875rem !important;
-    height: 0.875rem !important;
-  }
-
-  .icon-lg {
-    width: 1.125rem !important;
-    height: 1.125rem !important;
-  }
-
-  .icon-xl {
-    width: 1.375rem !important;
-    height: 1.375rem !important;
+  body {
+    @apply bg-background text-foreground;
   }
 }

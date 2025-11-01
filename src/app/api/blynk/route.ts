@@ -1,5 +1,6 @@
+// src/app/api/blynk/route.ts
 import { NextResponse } from "next/server";
-import { saveSensorData } from "@/lib/sensor-service";
+import { saveSensorDataOptimized } from "@/lib/sensor-service-server";
 
 export async function GET() {
   const authToken = process.env.BLYNK_AUTH_TOKEN;
@@ -103,12 +104,19 @@ export async function GET() {
 
     console.log("Final parsed data:", sensorData);
 
-    // Save to database
+    // Save to database (will only save every 5 minutes)
     let savedToDatabase = false;
     try {
-      const savedReading = await saveSensorData(sensorData);
-      savedToDatabase = true;
-      console.log("✅ Sensor data saved to database with ID:", savedReading.id);
+      const savedReading = await saveSensorDataOptimized(sensorData);
+      savedToDatabase = !!savedReading;
+      if (savedReading) {
+        console.log(
+          "✅ Sensor data saved to database with ID:",
+          savedReading.id
+        );
+      } else {
+        console.log("⏳ Sensor data not saved - too soon since last save");
+      }
     } catch (saveError) {
       console.error("❌ Failed to save sensor data to database:", saveError);
     }
