@@ -1,30 +1,26 @@
 // src/components/panels/environment/EnvironmentAnalytics.tsx
 "use client";
 
-import { Card } from "@/components/ui/cards/Card";
-import { CardContent } from "@/components/ui/cards/CardContent";
-import { CardHeader } from "@/components/ui/cards/CardHeader";
-import { CardTitle } from "@/components/ui/cards/CardTitle";
-
+import { motion } from "framer-motion";
 import { SensorData, ChartData } from "@/types";
 import EnvironmentChart from "@/components/charts/EnvironmentChart";
-import TimeRangeSelector from "@/components/ui/time-range/TimeRangeSelector";
-
 import { useEnvironmentData } from "./hooks/useEnvironmentData";
 import { useState } from "react";
-import TrendCards from "./components/TrendCards";
-import StatsPills from "./components/StatsPills";
+import EnvironmentOverview from "./components/EnvironmentOverview";
+import AnalyticsHeader from "../shared/components/AnalyticsHeader";
 
 interface EnvironmentAnalyticsProps {
   data: SensorData;
   chartData: ChartData[];
   timeRange: number;
+  onTimeRangeChange: (hours: number) => void;
 }
 
 export default function EnvironmentAnalytics({
   data,
   chartData,
   timeRange: initialTimeRange,
+  onTimeRangeChange,
 }: EnvironmentAnalyticsProps) {
   const [timeRange, setTimeRange] = useState<number>(initialTimeRange);
   const { environmentChartData, isLoading } = useEnvironmentData(
@@ -35,37 +31,40 @@ export default function EnvironmentAnalytics({
 
   const handleTimeRangeChange = (hours: number) => {
     setTimeRange(hours);
+    onTimeRangeChange(hours);
   };
 
   return (
-    <Card>
-      <CardHeader className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-gray-200">
-        <CardTitle>Environment Analytics</CardTitle>
-        <TimeRangeSelector
-          onTimeRangeChange={handleTimeRangeChange}
-          defaultRange={timeRange}
-          className="w-full lg:w-auto"
-        />
-      </CardHeader>
-      <CardContent className="space-y-6">
-        {/* Combined Trend Section */}
-        <div className="space-y-6">
-          <div className="flex items-center justify-between">
-            <h3 className="text-lg font-semibold text-foreground">
-              Environment Trends
-            </h3>
-          </div>
-          <TrendCards data={data} />
-          <StatsPills data={data} chartData={environmentChartData} />
-        </div>
+    <div className="space-y-6">
+      {/* Header with Time Range Selector */}
+      <AnalyticsHeader
+        title="Environment Analytics"
+        description="Real-time temperature and humidity monitoring"
+        timeRange={timeRange}
+        onTimeRangeChange={handleTimeRangeChange}
+      />
 
-        {/* Environment Chart */}
+      {/* Environment Overview */}
+      <motion.div
+        initial={{ opacity: 0, x: -20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.5, ease: "easeOut", delay: 0.1 }}
+      >
+        <EnvironmentOverview data={data} chartData={environmentChartData} />
+      </motion.div>
+
+      {/* Environment Chart */}
+      <motion.div
+        initial={{ opacity: 0, x: -20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.5, ease: "easeOut", delay: 0.3 }}
+      >
         <EnvironmentChart
           data={environmentChartData}
           timeRange={timeRange}
           isLoading={isLoading}
         />
-      </CardContent>
-    </Card>
+      </motion.div>
+    </div>
   );
 }

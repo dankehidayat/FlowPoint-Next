@@ -1,8 +1,8 @@
 // src/components/ui/time-range/TimeRangeSelector.tsx
 "use client";
 
-import { useState } from "react";
-import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 export interface TimeRangeOption {
   label: string;
@@ -25,10 +25,16 @@ const timeRanges: TimeRangeOption[] = [
 
 export default function TimeRangeSelector({
   onTimeRangeChange,
-  defaultRange = 1, // Changed default to 1H
+  defaultRange = 1,
   className = "",
 }: TimeRangeSelectorProps) {
   const [selectedRange, setSelectedRange] = useState<number>(defaultRange);
+  const [isInitial, setIsInitial] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setIsInitial(false), 100);
+    return () => clearTimeout(timer);
+  }, []);
 
   const handleRangeChange = (hours: number) => {
     setSelectedRange(hours);
@@ -36,26 +42,33 @@ export default function TimeRangeSelector({
   };
 
   return (
-    <div className={`flex items-center space-x-1 ${className}`}>
-      <div className="flex bg-gray-100 rounded-lg p-1 border border-gray-200">
+    <motion.div
+      className={`flex items-center space-x-1 ${className}`}
+      initial={{ opacity: 0, y: -10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, delay: 0.2 }}
+    >
+      <div className="flex bg-muted/50 rounded-lg p-1 border border-border">
         {timeRanges.map((range) => (
           <button
             key={range.value}
             onClick={() => handleRangeChange(range.value)}
             className={`
-              relative px-3 py-1.5 text-sm font-medium rounded-md transition-all duration-200
+              relative px-3 py-1.5 text-sm font-medium rounded-md transition-colors duration-200
               ${
                 selectedRange === range.value
-                  ? "text-gray-900"
-                  : "text-gray-500 hover:text-gray-700"
+                  ? "text-foreground"
+                  : "text-muted-foreground hover:text-foreground"
               }
             `}
           >
             {selectedRange === range.value && (
               <motion.div
                 layoutId="activeBackground"
-                className="absolute inset-0 bg-white shadow-sm border border-gray-200 rounded-md"
-                initial={false}
+                className="absolute inset-0 bg-background shadow-sm border border-border rounded-md"
+                initial={isInitial ? false : { scale: 0.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.8, opacity: 0 }}
                 transition={{
                   type: "spring",
                   stiffness: 500,
@@ -69,6 +82,6 @@ export default function TimeRangeSelector({
           </button>
         ))}
       </div>
-    </div>
+    </motion.div>
   );
 }

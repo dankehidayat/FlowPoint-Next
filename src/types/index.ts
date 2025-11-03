@@ -46,3 +46,20 @@ export interface Stats {
   avg: number;
   current: number;
 }
+
+// Add this to your existing src/types/index.ts file
+export interface MetricStats {
+  min: number;
+  max: number;
+  avg: number;
+  current: number;
+}
+
+export interface MetricConfig {
+  key: string;
+  name: string;
+  unit: string;
+  icon: React.ComponentType<any>;
+  color: string;
+  decimalPlaces: number;
+}
